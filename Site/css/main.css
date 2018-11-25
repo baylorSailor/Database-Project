@@ -1,0 +1,14 @@
+body {
+    font-family: sans-serif;
+    background-color: yellow;
+
+    #nav {
+        margin: 1%;
+    }
+
+    .column1 {
+        width: 31.3%;
+        float: right;
+        margin: 1%;
+    }
+}
