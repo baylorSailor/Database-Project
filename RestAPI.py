@@ -53,14 +53,8 @@ class HelloWorld(Resource):
         return make_response(render_template('index.html'), 200, headers)
 
     def post(self):
-        print(request.form)
-        print()
-        print(request.form["Last"])
-        print(request.get_json(force=True))
-        print()
-        print(request.get_data())
-        some_json=request.get_json()
-        return {'you sent:' : some_json}, 200
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('success.html'), 200, headers)
 
 # This class will take a GET request that also contains a key value called 'num'.
 # it will take the number that is paired with 'num', multiply it by 10 and return it to the front-end service.
