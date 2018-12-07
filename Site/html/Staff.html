@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff</title>
+</head>
+
+<body>
+    <div id="staffEntry">
+        <h1>
+            Staff Entry Form
+        </h1>
+        <form action="http://example.com" id="staffForm">
+            <p>Year accepted:
+                <input type="text" name="Year" size="4" maxlength="4" />
+            </p>
+
+            <p>Grade when accepted:
+                <select id="grade"></select>
+                <script type="text/javascript" src="../js/grade-dropdown.js"></script>
+            </p>
+
+            <p>Status:
+                <input type="radio" name="Status" value="Active" checked="checked" /> Active
+                <input type="radio" name="Status" value="Graduated" /> Gradudated
+                <input type="radio" name="Status" value="Moved" /> Moved away
+                <input type="radio" name="Status" value="NotInterested" /> No longer interested
+            </p>
+
+            <p>Grant Funded?
+                <input type="radio" name="Funded" value="Y" /> Yes
+                <input type="radio" name="Funded" value="N" checked="checked" /> No
+            </p>
+
+            <p>Which grant?
+                <input type="text" name="Grant" size="20" maxlength="26" />
+            </p>
+
+            <p>Mentor's First Name:
+                <h3></h3>
+                <input type="text" name="First" size="15" maxlength="25" />
+            </p>
+
+            <p>Mentor's Last Name:
+                <input type="text" name="Last" size="15" maxlength="25" />
+            </p>
+
+            <p>Sibling's First Name:
+                <input type="text" name="SiblingFirst" size="15" maxlength="25" />
+            </p>
+
+            <p>Sibling's Last Name:
+                <input type="text" name="SiblingLast" size="15" maxlength="25" />
+            </p>
+
+            <p>Disabilities:
+                <input type="text" name="Disabilities" size="15" maxlength="25" />
+            </p>
+
+            <p>Health conditions:
+                <input type="text" name="Health" size="15" maxlength="25" />
+            </p>
+
+            <p>English language learner?
+                <input type="radio" name="English" value="Yes" checked="checked" /> Yes
+                <input type="radio" name="Enslish" value="No" />No
+            </p>
+
+
+        </form>
+
+    </div>
+</body>
+</html>
