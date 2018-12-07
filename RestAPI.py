@@ -47,7 +47,10 @@ conn = mysql.connect()
 
 # this class is a simple helloWorld response to a HTTP GET request or an echo response to a POST request.
 class HelloWorld(Resource):
+<<<<<<< HEAD
 #    @app.route('/')
+=======
+>>>>>>> dbee5a8e2174c5ac36dd8fb68d3dd91843135e4c
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('index.html'), 200, headers)
@@ -144,13 +147,14 @@ class studentApply(Resource):
 #      http://127.0.0.1:5000/
 #      http://127.0.0.1:5000/register/student
 
-api.add_resource(HelloWorld, '/') # a Get request to the root will warrant a hello world response
+api.add_resource(HelloWorld, '/')
 api.add_resource(Multi, '/multi')
 api.add_resource(StudentsParents, '/StudentsParents.html')
 api.add_resource(registerStudent, '/register/student')
 api.add_resource(testSQL, '/testSQL')
 api.add_resource(studentApply, '/apply')
 
-#this will finally run our server once all other aspects of it hav ebeen created.
+
+# this will finally run our server once all other aspects of it hav ebeen created.
 if __name__ == '__main__':
     app.run(debug=True)
