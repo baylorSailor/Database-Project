@@ -36,9 +36,9 @@ mysql = MySQL()
 
 # I've changed these values so be easily discernible.
 # Be sure to change them into values that work for you.
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'Digby1097'
-app.config['MYSQL_DATABASE_DB'] = 'Project Database'
+app.config['MYSQL_DATABASE_USER'] = 'Master'
+app.config['MYSQL_DATABASE_PASSWORD'] = '91097TheMasterPassword1997'
+app.config['MYSQL_DATABASE_DB'] = 'databasegroupproject'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
 # attempting the mysql connection with our Flask app's mysql configurations.
