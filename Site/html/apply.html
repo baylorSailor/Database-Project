@@ -3,7 +3,7 @@
 
 <head>
     <title>Apply</title>
-      <link href="/styles.css" type="text/css" rel="stylesheet" />
+      <link href="../css/styles.css" type="text/css" rel="stylesheet" />
 </head>
     
 <header class="UYPHeader">
@@ -24,7 +24,7 @@
         <h1>
         Student Application Form
     </h1>
-    <form action="http://example.com" id="applicationForm">
+    <form action="http://127.0.0.1:5000/" method="post" id="applicationForm" name="studentApp">
         <p>First name:
             <input type="text" name="First" size="15" maxlength="25" />
         </p>
@@ -123,6 +123,7 @@
         <p>Sibling's Last Name:
             <input type="text" name="SiblingLast" size="15" maxlength="25" />
         </p>
+        <input type="submit" name="submit" value="submit" />
 
     </form>
     </div>

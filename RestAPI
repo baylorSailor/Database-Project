@@ -15,7 +15,7 @@
 # The flask_restful imports help with streamlining the api creation process so it is much more managable
 #   trying to code this without using the Flask_restful tools could be a problem with medium/large programs
 # The JSON import is what will handle converting the mysql tuple data into an easier to handle JSON format.
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_restful import Resource, Api, reqparse
 from flaskext.mysql import MySQL
 import json
@@ -36,9 +36,9 @@ mysql = MySQL()
 
 # I've changed these values so be easily discernible.
 # Be sure to change them into values that work for you.
-app.config['MYSQL_DATABASE_USER'] = 'HW3335'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'PW3335'
-app.config['MYSQL_DATABASE_DB'] = 'Experiment'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'Boston@19'
+app.config['MYSQL_DATABASE_DB'] = 'lab_experiments'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
 # attempting the mysql connection with our Flask app's mysql configurations.
@@ -48,9 +48,15 @@ conn = mysql.connect()
 # this class is a simple helloWorld response to a HTTP GET request or an echo response to a POST request.
 class HelloWorld(Resource):
     def get(self):
+        print(request.get_json())
         return{'about':'Hello World'}
 
     def post(self):
+        print(request.form)
+        print()
+        print(request.get_json(force=True))
+        print()
+        print(request.get_data())
         some_json=request.get_json()
         return {'you sent:' : some_json}, 200
 

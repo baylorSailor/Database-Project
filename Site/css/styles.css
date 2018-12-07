@@ -1,6 +1,6 @@
 body{
     font-family:sans-serif;
-    background-image:url("/BaylorBackground.jpg");
+    background-image:url("../images/BaylorBackground.jpg");
     background-attachment: fixed;
 }
 
@@ -10,7 +10,7 @@ body{
     width:50%;
     opacity: 0.8;
     text-align:left;
-    border-radius: : 25px;
+    border-radius: 25px;
     padding: 20px;
 }
 
