@@ -54,6 +54,7 @@ class HelloWorld(Resource):
     def post(self):
         print(request.form)
         print()
+        print(request.form["Last"])
         print(request.get_json(force=True))
         print()
         print(request.get_data())
