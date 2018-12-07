@@ -47,10 +47,9 @@ conn = mysql.connect()
 
 # this class is a simple helloWorld response to a HTTP GET request or an echo response to a POST request.
 class HelloWorld(Resource):
-    @app.route('/')
     def get(self):
-        print(request.get_json())
-        return render_template('index.html')
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('index.html'), 200, headers)
 
     def post(self):
         print(request.form)
