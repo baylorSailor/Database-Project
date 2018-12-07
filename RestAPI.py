@@ -15,7 +15,7 @@
 # The flask_restful imports help with streamlining the api creation process so it is much more managable
 #   trying to code this without using the Flask_restful tools could be a problem with medium/large programs
 # The JSON import is what will handle converting the mysql tuple data into an easier to handle JSON format.
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, make_response
 from flask_restful import Resource, Api, reqparse
 from flaskext.mysql import MySQL
 import json
@@ -124,7 +124,16 @@ class studentRegister(Resource):
         print()
         print(request.get_data())
         some_json=request.get_json()
-        return {send_from_directory}, 200
+        return {request.form}, 200
+
+class StudentsParents(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('StudentsParents.html'), 200, headers)
+class studentApply(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('apply.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
@@ -137,8 +146,10 @@ class studentRegister(Resource):
 
 api.add_resource(HelloWorld, '/') # a Get request to the root will warrant a hello world response
 api.add_resource(Multi, '/multi')
+api.add_resource(StudentsParents, '/StudentsParents.html')
 api.add_resource(registerStudent, '/register/student')
 api.add_resource(testSQL, '/testSQL')
+api.add_resource(studentApply, '/apply')
 
 #this will finally run our server once all other aspects of it hav ebeen created.
 if __name__ == '__main__':
