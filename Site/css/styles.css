@@ -4,7 +4,7 @@ body{
     background-attachment: fixed;
 }
 
-#applicationSheet{
+.applicationSheet{
     margin:auto;
     background-color:white;
     width:50%;

@@ -110,6 +110,20 @@ class registerStudent(Resource):
         except Exception as e:
             return {'error': str(e)}
 
+class studentRegister(Resource):
+    def get(self):
+        print(request.get_json())
+        return{'about':'Hello World'}
+
+    def post(self):
+        print(request.form)
+        print()
+        print(request.form["Last"])
+        print(request.get_json(force=True))
+        print()
+        print(request.get_data())
+        some_json=request.get_json()
+        return {send_from_directory}, 200
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
