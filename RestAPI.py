@@ -227,14 +227,14 @@ class HandleStaffSignIn(Resource):
 api.add_resource(HelloWorld, '/')  # a Get request to the root will warrant a hello world response
 api.add_resource(Multi, '/multi')
 api.add_resource(StudentsParents, '/StudentsParents.html')
-api.add_resource(testSQL, '/testSQL')
-api.add_resource(studentApply, '/apply')
-api.add_resource(staff, '/staff')
-api.add_resource(studentRegister, '/register/student')
-api.add_resource(studentSignIn, '/studentSignIn')
-api.add_resource(handleStudentSignIn, '/handleStudentSignIn')
-api.add_resource(staffSignIn, '/staffSignIn')
-api.add_resource(handleStaffSignIn, '/handleStaffSignIn')
+api.add_resource(TestSQL, '/testSQL')
+api.add_resource(StudentApply, '/apply')
+api.add_resource(Staff, '/staff')
+api.add_resource(StudentRegister, '/register/student')
+api.add_resource(StudentSignIn, '/studentSignIn')
+api.add_resource(HandleStudentSignIn, '/handleStudentSignIn')
+api.add_resource(StaffSignIn, '/staffSignIn')
+api.add_resource(HandleStaffSignIn, '/handleStaffSignIn')
 
 # this will finally run our server once all other aspects of it hav ebeen created.
 if __name__ == '__main__':
