@@ -117,7 +117,10 @@ class studentRegister(Resource):
         print()
         print(request.get_data())
         cursor = conn.cursor()
-        query = "INSERT INTO `databasegroupproject`.`student` (`FirstName`, `LastName`, `MiddleInitial`, `Suffix`, `NickName`, `Address`, `City`, `State`, `ZIP`, `Birthdate`, `Gender`, `Race`, `Email`, `Phone Number`, `GTProgram`, `YearAccepted`, `GradeWhenAccepted`, `Status`, `ELL`, `MISC`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO `student` (`FirstName`, `LastName`, `MiddleInitial`, `Suffix`," \
+                " `NickName`, `Address`, `City`, `State`, `ZIP`, `Birthdate`, `Gender`, `Race`, `Email`, " \
+                "`Phone Number`, `GTProgram`, `YearAccepted`, `GradeWhenAccepted`, `Status`, `ELL`, `MISC`) VALUES " \
+                "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         print(request.form["First"])
         first = request.form["First"]
         print(request.form["Last"])
@@ -138,7 +141,7 @@ class studentRegister(Resource):
         zip = request.form["Zip"]
         print(request.form["Birthdate"])
         birth = request.form["Birthdate"]
-        if (request.form["Gender"] == "Male"):
+        if request.form["Gender"] == "Male":
             gender = 0
         else:
             gender = 1
@@ -150,7 +153,8 @@ class studentRegister(Resource):
         print(request.form["Phone"])
         phone = request.form["Phone"]
 
-        values = (request.form["First"], request.form["Last"], request.form["Middle"], request.form["Suffix"], request.form["Preffered"], request.form["Address"], request.form["City"], request.form["State"], request.form["Zip"], request.form["Birthdate"], gender, request.form["Race"], request.form["Email"], request.form["Phone"], 'N', '2018', '72', 'yes', 0, 'Hello')
+        values = (first, last, middle, suffix, preffered, address, city, state, zip, birth, gender, race, email, phone,
+                  'N', '2018', '72', 'yes', 0, 'Hello')
         cursor.execute(query, values)
         return {request.form}, 200
 
