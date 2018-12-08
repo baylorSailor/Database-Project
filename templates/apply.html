@@ -46,7 +46,7 @@
         <hr/>
 
         <p>Address:
-            <input type="text" name="Address" size="15" maxlength="25"/>
+            <input type="text" name="Address" size="25" maxlength="100"/>
         </p>
 
         <p>City:
@@ -120,10 +120,10 @@
         </p>
 
         <p>Gender:
-           <select name="Gender">
+            <select name="Gender">
                 <option value="M">Male</option>
                 <option value="F">Female</option>
-           </select>
+            </select>
         </p>
 
         <p>Race
@@ -137,18 +137,24 @@
         <hr/>
 
         <p>School Information
-            <input type="radio" name="Type" value="Public" checked="checked"/> Public
-            <input type="radio" name="Type" value="Private"/> Private
-            <input type="radio" name="Type" value="Homeschooled"/> Homeschooled
-        </p>
+            <select name="schoolType" onchange="schoolCheck(this);">
+                <option value="private">private</option>
+                 <option value="public">public</option>
+                <option value="home">home-schooled</option>
+            </select>
 
-        <p>Name of High School:
+
+        </p>
+        <div id="district" style="display: none;">
+            <p>District:
+                <input type="text" name="District" size="25" maxlength="25"/>
+            </p>
+        </div>
+        <div id = "schoolName" style="display: none;">
+        <p>Name of school:
             <input type="text" name="HighSchool" size="25" maxlength="25"/>
         </p>
-
-        <p>District:
-            <input type="text" name="District" size="25" maxlength="25"/>
-        </p>
+        </div>
 
         <p>Expected Graduation Date:
             <input type="date" name="GradDate" size="10" maxlength="11"/>
@@ -181,5 +187,20 @@
     </form>
 </div>
 </body>
-
+<script>
+    function schoolCheck(that) {
+        if (that.value =="private") {
+            document.getElementById("schoolName").style.display = "block";
+            document.getElementById("district").style.display = "none";
+        }
+        if(that.value =="home"){
+            document.getElementById("district").style.display = "none";
+            document.getElementById("schoolName").style.display = "none";
+        }
+        if (that.value == "public") {
+            document.getElementById("district").style.display = "block";
+            document.getElementById("schoolName").style.display = "block";
+        }
+    }
+</script>
 </html>
