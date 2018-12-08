@@ -112,7 +112,7 @@ class studentRegister(Resource):
 
     def post(self):
         print(request.form)
-        print()
+        print("received data")
         print(request.form["Last"])
         print(request.get_json(force=True))
         print()
@@ -134,6 +134,11 @@ class studentApply(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('apply.html'), 200, headers)
+
+class staff(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('staff.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
@@ -147,9 +152,10 @@ class studentApply(Resource):
 api.add_resource(HelloWorld, '/') # a Get request to the root will warrant a hello world response
 api.add_resource(Multi, '/multi')
 api.add_resource(StudentsParents, '/StudentsParents.html')
-api.add_resource(registerStudent, '/register/student')
 api.add_resource(testSQL, '/testSQL')
 api.add_resource(studentApply, '/apply')
+api.add_resource(staff, '/staff')
+api.add_resource(studentRegister, '/register/student')
 
 #this will finally run our server once all other aspects of it hav ebeen created.
 if __name__ == '__main__':

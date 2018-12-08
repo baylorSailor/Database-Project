@@ -1,14 +1,25 @@
 body{
     font-family:sans-serif;
-    background-image:url("https://i.imgur.com/2b1lz6R.jpg") !important;
+    background-image:url("../static/BaylorBackground.jpg") !important;
     background-color: #86989B;
 
 }
 
-.applicationSheet{
+.infoSheet{
     margin:auto;
     background-color:white;
     width:50%;
+    opacity: 0.8;
+    text-align:left;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+#successInfoSheet{
+    alignment: left;
+    margin: auto;
+    background-color:white;
+    width:30%;
     opacity: 0.8;
     text-align:left;
     border-radius: 25px;
