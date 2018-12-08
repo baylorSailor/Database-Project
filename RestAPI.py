@@ -114,7 +114,6 @@ class studentRegister(Resource):
         print(request.form)
         print("received data")
         print(request.form["Last"])
-        print(request.get_json(force=True))
         print()
         print(request.get_data())
         cursor = conn.cursor()
