@@ -135,10 +135,10 @@ class studentRegister(Resource):
         phone = request.form["Phone"]
 
         values = (first, last, middle, suffix, preffered, address, city, state, zip, birth, str(gender), race, email,
-                  phone, 'N', '2018', '72', 'yes', '0', 'Hello')
+                  phone, 'N/A', 'N/A', 'N/A', 'Applying', '0', 'N/A')
+        query = query % values
         cursor.execute(query)
         conn.commit()
-        print(request.form)
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('success.html'), 200, headers)
 
@@ -164,6 +164,8 @@ class studentSignIn(Resource):
 class handleStudentSignIn(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
+        thing = request.form["Username"]
+        print(thing)
         return make_response(render_template('success.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
