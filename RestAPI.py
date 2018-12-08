@@ -15,7 +15,7 @@
 # The flask_restful imports help with streamlining the api creation process so it is much more managable
 #   trying to code this without using the Flask_restful tools could be a problem with medium/large programs
 # The JSON import is what will handle converting the mysql tuple data into an easier to handle JSON format.
-from flask import Flask, request, render_template, make_response
+from flask import Flask, flash, request, render_template, make_response
 from flask_restful import Resource, Api, reqparse
 from flaskext.mysql import MySQL
 import json
@@ -170,9 +170,13 @@ class handleStudentSignIn(Resource):
         cursor = conn.cursor()
         cursor.execute(query, username)
         result = cursor.fetchall()
-        if result == password:
-            print("Sweet")
-        return make_response(render_template('success.html'), 200, headers)
+        for row in result:
+            for column in row:
+                if column == password:
+                    app.config['MYSQL_DATABASE_USER'] = 'User'
+                    app.config['MYSQL_DATABASE_PASSWORD'] = 'UserPassword'
+                    return make_response(render_template('success.html'),200,headers)
+        return make_response(render_template('studentSingIn.html'), 200, headers)
 
 class staffSignIn(Resource):
     def get(self):
@@ -182,7 +186,21 @@ class staffSignIn(Resource):
 class handleStaffSignIn(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('success.html'), 200, headers)
+        username = request.form["username"]
+        password = request.form["password"]
+        query = "Select password from `databasegroupproject`.`admin` where username=%s"
+        cursor = conn.cursor()
+        cursor.execute(query, username)
+        result = cursor.fetchall()
+        for row in result:
+            for column in row:
+                if column == password:
+                    app.config['MYSQL_DATABASE_USER'] = 'Admin'
+                    app.config['MYSQL_DATABASE_PASSWORD'] = 'AdminPassword'
+                    return make_response(render_template('success.html'), 200, headers)
+
+ 
+        return make_response(render_template('staffSignIn.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
