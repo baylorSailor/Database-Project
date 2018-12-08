@@ -111,11 +111,7 @@ class studentRegister(Resource):
         return{'about':'Hello World'}
 
     def post(self):
-        print(request.form)
-        print("received data")
-        print(request.form["Last"])
-        print()
-        print(request.get_data())
+
         cursor = conn.cursor()
         query = "INSERT INTO `databasegroupproject`.`student` (`FirstName`, `LastName`, `MiddleInitial`, `Suffix`, `NickName`, `Address`, `City`, `State`, `ZIP`, `Birthdate`, `Gender`, `Race`, `Email`, `Phone Number`, `GTProgram`, `YearAccepted`, `GradeWhenAccepted`, `Status`, `ELL`, `MISC`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, \'%s\', %s)"
         if(request.form["Gender"] == "Male"):
@@ -139,6 +135,16 @@ class staff(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('staff.html'), 200, headers)
+
+class studentSignIn(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('studentSignIn.html'), 200, headers)
+
+class handleStudentSignIn(Resource):
+    def post(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('success.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
@@ -156,6 +162,8 @@ api.add_resource(testSQL, '/testSQL')
 api.add_resource(studentApply, '/apply')
 api.add_resource(staff, '/staff')
 api.add_resource(studentRegister, '/register/student')
+api.add_resource(studentSignIn, '/studentSignIn')
+api.add_resource(handleStudentSignIn, '/handleStudentSignIn')
 
 #this will finally run our server once all other aspects of it hav ebeen created.
 if __name__ == '__main__':

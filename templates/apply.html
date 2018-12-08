@@ -191,11 +191,14 @@
     function schoolCheck(that) {
         if (that.value =="private") {
             document.getElementById("schoolName").style.display = "block";
-            document.getElementById("district").style.display = "none";
+            document.getElementById("district").value='';
+
         }
         if(that.value =="home"){
             document.getElementById("district").style.display = "none";
+            document.getElementById("district").value ="";
             document.getElementById("schoolName").style.display = "none";
+            document.getElementById("schoolName").value ="";
         }
         if (that.value == "public") {
             document.getElementById("district").style.display = "block";
