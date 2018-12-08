@@ -107,20 +107,40 @@ class registerStudent(Resource):
 
 class studentRegister(Resource):
     def get(self):
-        print(request.get_json())
         return{'about':'Hello World'}
 
     def post(self):
-
         cursor = conn.cursor()
-        query = "INSERT INTO `databasegroupproject`.`student` (`FirstName`, `LastName`, `MiddleInitial`, `Suffix`, `NickName`, `Address`, `City`, `State`, `ZIP`, `Birthdate`, `Gender`, `Race`, `Email`, `Phone Number`, `GTProgram`, `YearAccepted`, `GradeWhenAccepted`, `Status`, `ELL`, `MISC`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, \'%s\', %s)"
-        if(request.form["Gender"] == "Male"):
+        query = "INSERT INTO `databasegroupproject`.`student` (`FirstName`, `LastName`, `MiddleInitial`, `Suffix`," \
+                " `NickName`, `Address`, `City`, `State`, `ZIP`, `Birthdate`, `Gender`, `Race`, `Email`, " \
+                "`Phone Number`, `GTProgram`, `YearAccepted`, `GradeWhenAccepted`, `Status`, `ELL`, `MISC`) VALUES " \
+                "(\'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', " \
+                "\'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\')"
+        first = request.form["First"]
+        last = request.form["Last"]
+        middle = request.form["Middle"]
+        suffix = request.form["Suffix"]
+        preffered = request.form["Preffered"]
+        address = request.form["Address"]
+        city = request.form["City"]
+        state = request.form["State"]
+        zip = request.form["Zip"]
+        birth = request.form["Birthdate"]
+        if request.form["Gender"] == "M":
             gender = 0
         else:
             gender = 1
-        values = (request.form["First"], request.form["Last"], request.form["Middle"], request.form["Suffix"], request.form["Preffered"], request.form["Address"], request.form["City"], request.form["State"], request.form["Zip"], request.form["Birthdate"], gender, request.form["Race"], request.form["Email"], request.form["Phone"], 'N', '2018', '72', 'yes', 0, 'Hello')
-        cursor.execute(query, values)
-        return {request.form}, 200
+        race = request.form["Race"]
+        email = request.form["Email"]
+        phone = request.form["Phone"]
+
+        values = (first, last, middle, suffix, preffered, address, city, state, zip, birth, str(gender), race, email,
+                  phone, 'N', '2018', '72', 'yes', '0', 'Hello')
+        cursor.execute(query)
+        conn.commit()
+        print(request.form)
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('success.html'), 200, headers)
 
 class StudentsParents(Resource):
     def get(self):
@@ -168,3 +188,4 @@ api.add_resource(handleStudentSignIn, '/handleStudentSignIn')
 #this will finally run our server once all other aspects of it hav ebeen created.
 if __name__ == '__main__':
     app.run(debug=True)
+
