@@ -221,6 +221,37 @@ class staffNewUser(Resource):
 class handleStaffNewUser(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
+        username = request.form["username"]
+        password = request.form["password"]
+        roll = request.form["userRole"]
+
+        if roll == "Admin":
+            query = "select username from `databasegroupproject`.`admin` where username=%s"
+            cursor = conn.cursor()
+            cursor.execute(query, username)
+            result = cursor.fetchall()
+            for row in result:
+                for column in row:
+                    if column == username:
+                        return make_response(render_template('staffCreateUser.html'), 200, headers)
+            query = "Insert into `databasegroupproject`.`admin` Values (%s,%s)"
+            values = (username, password)
+            cursor = conn.cursor()
+            cursor.execute(query,values)
+            conn.commit()
+        else:
+            query = "select username from `databasegroupproject`.`user` where username=%s"
+            cursor = conn.cursor()
+            cursor.execute(query, username)
+            result = cursor.fetchall()
+            for row in result:
+                for column in row:
+                    if column == username:
+                        return make_response(render_template('staffCreateUser.html'), 200, headers)
+            query = "Insert into `databasegroupproject`.`user` (username, password) Values (%s,%s)"
+            values = (username,password)
+            cursor.execute(query, values)
+            conn.commit()
         return make_response(render_template('success.html'), 200, headers)
 
 
