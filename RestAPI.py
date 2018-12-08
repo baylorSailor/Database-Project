@@ -164,8 +164,14 @@ class studentSignIn(Resource):
 class handleStudentSignIn(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
-        thing = request.form["Username"]
-        print(thing)
+        username = request.form["username"]
+        password = request.form["password"]
+        query = "Select password from `databasegroupproject`.`user` where username=%s"
+        cursor = conn.cursor()
+        cursor.execute(query, username)
+        result = cursor.fetchall()
+        if result == password:
+            print("Sweet")
         return make_response(render_template('success.html'), 200, headers)
 
 class staffSignIn(Resource):
