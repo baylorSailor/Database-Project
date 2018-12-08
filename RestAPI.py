@@ -201,6 +201,15 @@ class handleStaffSignIn(Resource):
 
  
         return make_response(render_template('staffSignIn.html'), 200, headers)
+
+class staffNewUser(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('staffCreateUser.html'), 200, headers)
+class handleStaffNewUser(Resource):
+    def post(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('success.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
@@ -222,7 +231,8 @@ api.add_resource(studentSignIn, '/studentSignIn')
 api.add_resource(handleStudentSignIn, '/handleStudentSignIn')
 api.add_resource(staffSignIn, '/staffSignIn')
 api.add_resource(handleStaffSignIn, '/handleStaffSignIn')
-
+api.add_resource(staffNewUser, '/staffNewUser')
+api.add_resource(handleStaffNewUser, '/handleStaffNewUser')
 #this will finally run our server once all other aspects of it hav ebeen created.
 if __name__ == '__main__':
     app.run(debug=True)
