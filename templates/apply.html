@@ -3,128 +3,180 @@
 
 <head>
     <title>Apply</title>
-      <link href="../static/styles.css" type="text/css" rel="stylesheet" />
+    <link href="../static/styles.css" type="text/css" rel="stylesheet"/>
 </head>
-    
+
 <header class="UYPHeader">
-    <h1 >
+    <h1>
         University for Young People
     </h1>
 </header>
 <nav class="topnav">
-  <a class="active" href="\">Home</a>
-  <a href="#news">News</a>
-  <a href="#contact">Contact</a>
-  <a href="#about">About</a>
+    <a class="active" href="\">Home</a>
+    <a href="#news">News</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
 </nav>
 <body>
-    <div class="infoSheet">
-        <h1>
+<div class="infoSheet">
+    <h1>
         Student Application Form
     </h1>
     <form action="http://127.0.0.1:5000/register/student" method="post" id="applicationForm" name="studentApp">
         <p>First name:
-            <input type="text" name="First" size="15" maxlength="25" />
+            <input type="text" name="First" size="15" maxlength="25"/>
         </p>
 
         <p>Last name:
-            <input type="text" name="Last" size="15" maxlength="25" />
+            <input type="text" name="Last" size="15" maxlength="25"/>
         </p>
 
         <p>Middle name:
-            <input type="text" name="Middle" size="15" maxlength="25" />
+            <input type="text" name="Middle" size="15" maxlength="25"/>
         </p>
 
         <p>Suffix:
-            <input type="text" name="Suffix" size="15" maxlength="25" />
+            <input type="text" name="Suffix" size="15" maxlength="25"/>
         </p>
 
         <p>Preffered name:
-            <input type="text" name="Preffered" size="15" maxlength="25" />
+            <input type="text" name="Preffered" size="15" maxlength="25"/>
         </p>
 
-        <hr />
+        <hr/>
 
         <p>Address:
-            <input type="text" name="Address" size="15" maxlength="25" />
+            <input type="text" name="Address" size="15" maxlength="25"/>
         </p>
 
         <p>City:
-            <input type="text" name="City" size="15" maxlength="25" />
+            <input type="text" name="City" size="15" maxlength="25"/>
         </p>
 
         <p>State:
-            <input type="text" name="State" size="2" maxlength="2" />
+            <select name="State">
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="DC">District Of Columbia</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="HI">Hawaii</option>
+                <option value="ID">Idaho</option>
+                <option value="IL">Illinois</option>
+                <option value="IN">Indiana</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="MT">Montana</option>
+                <option value="NE">Nebraska</option>
+                <option value="NV">Nevada</option>
+                <option value="NH">New Hampshire</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="ND">North Dakota</option>
+                <option value="OH">Ohio</option>
+                <option value="OK">Oklahoma</option>
+                <option value="OR">Oregon</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="RI">Rhode Island</option>
+                <option value="SC">South Carolina</option>
+                <option value="SD">South Dakota</option>
+                <option value="TN">Tennessee</option>
+                <option value="TX">Texas</option>
+                <option value="UT">Utah</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+                <option value="WV">West Virginia</option>
+                <option value="WI">Wisconsin</option>
+                <option value="WY">Wyoming</option>
+            </select>
         </p>
 
         <p>Zip:
-            <input type="text" name="Zip" size="5" maxlength="11" />
+            <input type="text" name="Zip" size="5" maxlength="11"/>
         </p>
 
-        <hr />
+        <hr/>
 
         <p>Birthdate:
-            <input type="date" name="Birthdate" size="10" maxlength="11" />
+            <input type="date" name="Birthdate" size="10" maxlength="11"/>
         </p>
 
         <p>Gender:
-            <input type="text" name="Gender" size="6" maxlength="8" />
+            <input type="text" name="Gender" size="6" maxlength="8"/>
         </p>
 
         <p>Race
-            <br />
-            <input type="radio" name="Race" value="White" checked="checked" /> White (non-Hispanic)
-            <input type="radio" name="Race" value="Black" /> African-American
-            <input type="radio" name="Race" value="Hispanic" /> Hispanic
-            <input type="radio" name="Race" value="Asian" /> Asian
+            <br/>
+            <input type="radio" name="Race" value="White" checked="checked"/> White (non-Hispanic)
+            <input type="radio" name="Race" value="Black"/> African-American
+            <input type="radio" name="Race" value="Hispanic"/> Hispanic
+            <input type="radio" name="Race" value="Asian"/> Asian
         </p>
 
-        <hr />
+        <hr/>
 
         <p>School Information
-            <input type="radio" name="Type" value="Public" checked="checked" /> Public
-            <input type="radio" name="Type" value="Private" /> Private
-            <input type="radio" name="Type" value="Homeschooled" /> Homeschooled
+            <input type="radio" name="Type" value="Public" checked="checked"/> Public
+            <input type="radio" name="Type" value="Private"/> Private
+            <input type="radio" name="Type" value="Homeschooled"/> Homeschooled
         </p>
 
         <p>Name of High School:
-            <input type="text" name="HighSchool" size="25" maxlength="25" />
+            <input type="text" name="HighSchool" size="25" maxlength="25"/>
         </p>
 
         <p>District:
-            <input type="text" name="District" size="25" maxlength="25" />
+            <input type="text" name="District" size="25" maxlength="25"/>
         </p>
 
         <p>Expected Graduation Date:
-            <input type="date" name="GradDate" size="10" maxlength="11" />
+            <input type="date" name="GradDate" size="10" maxlength="11"/>
         </p>
 
         <p>Email:
-            <input type="text" name="Email" size="25" maxlength="25" />
+            <input type="text" name="Email" size="25" maxlength="25"/>
         </p>
 
         <p>Student's Phone:
-            <input type="text" name="Phone" size="12" maxlength="15" />
+            <input type="text" name="Phone" size="12" maxlength="15"/>
         </p>
 
-        <hr />
+        <hr/>
 
         <p>Do you have a sibling currently enrolled in UYP?
-            <input type="radio" name="isSibling" value="Yes" /> Yes
-            <input type="radio" name="isSibling" value="No" checked="checked" /> No
+            <input type="radio" name="isSibling" value="Yes"/> Yes
+            <input type="radio" name="isSibling" value="No" checked="checked"/> No
         </p>
 
         <p>Sibling's First Name:
-            <input type="text" name="SiblingFirst" size="15" maxlength="25" />
+            <input type="text" name="SiblingFirst" size="15" maxlength="25"/>
         </p>
 
         <p>Sibling's Last Name:
-            <input type="text" name="SiblingLast" size="15" maxlength="25" />
+            <input type="text" name="SiblingLast" size="15" maxlength="25"/>
         </p>
-        <input type="submit" name="submit" value="submit" />
+        <input type="submit" name="submit" value="submit"/>
 
     </form>
-    </div>
+</div>
 </body>
 
 </html>
