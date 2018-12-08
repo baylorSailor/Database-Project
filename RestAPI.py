@@ -5,11 +5,11 @@
 # requesting MySQL data and sending the json formatted tuples to a front-end service, and parsing data send by the
 # front end service into variables for possible insertion into a table.
 # necessary libraries:
-    # Flask-RESTFUL
-    # Flask-MySQL
-    # Flask
-    # whatever version of python MySQL that is necessary for your operating system.
-        # refer to this video: https://www.youtube.com/watch?v=x7SwgcpACng&t=
+# Flask-RESTFUL
+# Flask-MySQL
+# Flask
+# whatever version of python MySQL that is necessary for your operating system.
+# refer to this video: https://www.youtube.com/watch?v=x7SwgcpACng&t=
 # These are the imports that are needed for this program to work.
 # The Flask and request imports are included to handle whatever http requests are sent to our server
 # The flask_restful imports help with streamlining the api creation process so it is much more managable
@@ -29,7 +29,6 @@ app = Flask(__name__)
 api = Api(app)
 mysql = MySQL()
 
-
 # MySQL configurations
 # for some reason, the port is not needed. So I assume it
 #   searches through all of them until it finds the right one
@@ -45,9 +44,10 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 conn = mysql.connect()
 
+
 # this class is a simple helloWorld response to a HTTP GET request or an echo response to a POST request.
 class HelloWorld(Resource):
-#    @app.route('/')
+    #    @app.route('/')
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('index.html'), 200, headers)
@@ -56,17 +56,19 @@ class HelloWorld(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('success.html'), 200, headers)
 
+
 # This class will take a GET request that also contains a key value called 'num'.
 # it will take the number that is paired with 'num', multiply it by 10 and return it to the front-end service.
 # CURRENTLY DOES NOT WORK
 class Multi(Resource):
     def get(self, num):
-        return {'result': num*10}
+        return {'result': num * 10}
+
 
 # This class will take any get request. Once a request is received ti will make a query to a MySQL schema,
-    # and it will return the tuples to the sender in JSON format.
+# and it will return the tuples to the sender in JSON format.
 # NOTE: there were some issues with the conversion of a datetype to Json, so we can handle that later.
-class testSQL(Resource):
+class TestSQL(Resource):
     def get(self):
         try:
             # creating a mysql cursor form our conn variable that was created earlier
@@ -82,13 +84,14 @@ class testSQL(Resource):
         except Exception as e:
             return {'error': str(e)}
 
-# this is just a basic parsing example. if you make a POST request here it will look for the keywords
-    # that should be associated with the request. the POST request will need to have two key-value pairs:
-    # email: <emailaddress>
-    # password: <password>
-    # if either one of these is not found, it will return an error.
 
-class registerStudent(Resource):
+# this is just a basic parsing example. if you make a POST request here it will look for the keywords
+# that should be associated with the request. the POST request will need to have two key-value pairs:
+# email: <emailaddress>
+# password: <password>
+# if either one of these is not found, it will return an error.
+
+class RegisterStudent(Resource):
     def post(self):
         try:
             # Parse the arguments
@@ -105,9 +108,10 @@ class registerStudent(Resource):
         except Exception as e:
             return {'error': str(e)}
 
-class studentRegister(Resource):
+
+class StudentRegister(Resource):
     def get(self):
-        return{'about':'Hello World'}
+        return {'about': 'Hello World'}
 
     def post(self):
         cursor = conn.cursor()
@@ -142,26 +146,32 @@ class studentRegister(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('success.html'), 200, headers)
 
+
 class StudentsParents(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('StudentsParents.html'), 200, headers)
-class studentApply(Resource):
+
+
+class StudentApply(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('apply.html'), 200, headers)
 
-class staff(Resource):
+
+class Staff(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('staff.html'), 200, headers)
 
-class studentSignIn(Resource):
+
+class StudentSignIn(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('studentSignIn.html'), 200, headers)
 
-class handleStudentSignIn(Resource):
+
+class HandleStudentSignIn(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
         username = request.form["username"]
@@ -175,15 +185,17 @@ class handleStudentSignIn(Resource):
                 if column == password:
                     app.config['MYSQL_DATABASE_USER'] = 'User'
                     app.config['MYSQL_DATABASE_PASSWORD'] = 'UserPassword'
-                    return make_response(render_template('success.html'),200,headers)
-        return make_response(render_template('studentSingIn.html'), 200, headers)
+                    return make_response(render_template('success.html'), 200, headers)
+        return make_response(render_template('studentSignIn.html'), 200, headers)
 
-class staffSignIn(Resource):
+
+class StaffSignIn(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('staffSignIn.html'), 200, headers)
 
-class handleStaffSignIn(Resource):
+
+class HandleStaffSignIn(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
         username = request.form["username"]
@@ -199,19 +211,20 @@ class handleStaffSignIn(Resource):
                     app.config['MYSQL_DATABASE_PASSWORD'] = 'AdminPassword'
                     return make_response(render_template('success.html'), 200, headers)
 
- 
         return make_response(render_template('staffSignIn.html'), 200, headers)
+
+
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
 
 # when you run thi program, the consol should show what address it is runnin off of.
-    # add the following paths to the address to access it's different functions.
+# add the following paths to the address to access it's different functions.
 # eg:  http://127.0.0.1:5000/testSQL
 #      http://127.0.0.1:5000/
 #      http://127.0.0.1:5000/register/student
 
-api.add_resource(HelloWorld, '/') # a Get request to the root will warrant a hello world response
+api.add_resource(HelloWorld, '/')  # a Get request to the root will warrant a hello world response
 api.add_resource(Multi, '/multi')
 api.add_resource(StudentsParents, '/StudentsParents.html')
 api.add_resource(testSQL, '/testSQL')
@@ -223,7 +236,6 @@ api.add_resource(handleStudentSignIn, '/handleStudentSignIn')
 api.add_resource(staffSignIn, '/staffSignIn')
 api.add_resource(handleStaffSignIn, '/handleStaffSignIn')
 
-#this will finally run our server once all other aspects of it hav ebeen created.
+# this will finally run our server once all other aspects of it hav ebeen created.
 if __name__ == '__main__':
     app.run(debug=True)
-
