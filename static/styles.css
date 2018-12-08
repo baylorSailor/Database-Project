@@ -15,11 +15,10 @@ body{
     padding: 20px;
 }
 
-#successInfoSheet{
-    alignment: left;
+#welcomeSheet{
     margin: auto;
     background-color:white;
-    width:30%;
+    width:50%;
     opacity: 0.8;
     text-align:left;
     border-radius: 25px;
@@ -64,6 +63,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', end
 }
 
 .UYPHeader {
+    width:100%;
     margin-top: 0;
     margin-bottom: 0;
     color: white;
