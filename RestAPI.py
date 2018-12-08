@@ -120,6 +120,8 @@ class studentRegister(Resource):
         cursor = conn.cursor()
         query = '''INSERT INTO student (FirstName, LastName, MiddleInitial, Suffix, NickName, Address, City, State, ZIP, Birthdate, Gender, Race, Email, Phone Number, GTProgram, YearAccepted, GradeWhenAccepted, Status, ELL, MISC) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
         values = (request.form["First"],request.form["Last"],request.form["Middle"],request.form["Suffix"],request.form["Preffered"],request.form["Address"],request.form["City"],request.form["State"],request.form["Zip"],request.form["Birthdate"],request.form["Gender"],request.form["Race"],request.form["Email"],request.form["Phone"],'N','2018','72','yes','10','Hello')
+        print(query)
+        print(values)
         cursor.execute(query, values)
         some_json=request.get_json()
         return {request.form}, 200
