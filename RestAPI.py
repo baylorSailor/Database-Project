@@ -122,7 +122,7 @@ def do_login():
         elif password == tempPass2:
             session['logged_in'] = True
             session['username'] = username
-            session['role'] = 'staff'
+            session['role'] = 'admin'
             flash('Welcome back administrator' + username)
         else:
             flash('wrong password!', 'danger')
