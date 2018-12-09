@@ -77,8 +77,12 @@ def home():
 
 @app.route('/HandleLogin', methods=['POST'])
 def do_login():
+    print("Session")
+    print(session)
+    print("End")
     password = request.form['password']
     username = request.form['username']
+
     if(password=='password' and username=='student'):
         print('good name')
         session['logged_in'] = True
