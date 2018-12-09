@@ -486,8 +486,25 @@ class handleStaffNewUser(Resource):
             conn.commit()
         return make_response(render_template('success.html'), 200, headers)
 
+class showClasses(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('classes.html'), 200, headers)
 
+class createClass(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('createClass.html'), 200, headers)
 
+class handleCreateClass(Resource):
+    def post(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('success.html'), 200, headers)
+
+class staffIndex(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('staffIndex.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
@@ -513,6 +530,10 @@ api.add_resource(HandleStaffSignIn, '/handleStaffSignIn')
 api.add_resource(staffNewUser, '/staffNewUser')
 api.add_resource(handleStaffNewUser, '/handleStaffNewUser')
 api.add_resource(HandleStaff, '/handleStaff')
+api.add_resource(showClasses, '/showClasses')
+api.add_resource(createClass, '/createClass')
+api.add_resource(handleCreateClass, '/handleCreateClass')
+api.add_resource(staffIndex, '/staffindex')
 #this will finally run our server once all other aspects of it hav ebeen created.
 
 

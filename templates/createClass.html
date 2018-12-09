@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="../static/styles.css" type="text/css" rel="stylesheet"/>
+    <title>Staff Sign-in</title>
+</head>
+<header class="UYPHeader">
+    <h1 >
+        University for Young People
+    </h1>
+</header>
+<nav class="topnav">
+  <<a href="\">Home</a>
+    <a class="active" href="\staffNewUser">New User</a>
+    <a href="\login">login</a>
+    <a href="\logout">logout</a>
+    <a  href="\apply">apply</a>
+
+</nav>
+<body>
+<div class="infoSheet">
+    <h1>
+        Create New Class
+    </h1>
+    <form action="http://127.0.0.1:5000/handleCreateClass" method="post" id="applicationForm" name="studentApp">
+
+        <p>Class level:
+            <select name="level">
+                <option value="elementary">4th-5th grade</option>
+                <option value="middle">6th-8th grade</option>
+                <option value="high">9th-12th</option>
+            </select>
+        </p>
+        <p>class name:
+            <input type="text" name="className" size="20" maxlength="20"/>
+        </p>
+
+        <p>capacity:
+            <input type="text" name="capacity" size="4" maxlength="4"/>
+        </p>
+
+        <p>Year:
+            <input type="text" name="year" size="4" maxlength="4"/>
+        </p>
+
+        <p>room:
+            <input type="text" name = "room"/>
+        </p>
+
+         <p>instructor:
+            <input type="text" name = "instructor"/>
+        </p>
+        <p> cost:
+            <input type="number" min="1" step="any" name="cost" />
+        </p>
+
+        <input type="submit" name="submit" value="submit"/>
+    </form>
+</div>
+</body>
+</html>
