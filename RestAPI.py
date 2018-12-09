@@ -18,6 +18,7 @@
 from flask import Flask, flash,redirect,session,abort, request, render_template, make_response
 from flask_restful import Resource, Api, reqparse
 from flaskext.mysql import MySQL
+from flask_user import login_required, user_manager, user_mixin, SQLAlchemyAdapter
 
 import json
 import os
@@ -67,6 +68,7 @@ class User():
 def home():
     if not session.get('logged_in'):
         return render_template('login.html')
+
     else:
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('index.html'), 200, headers)
