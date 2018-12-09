@@ -228,6 +228,12 @@ class HandleStaff(Resource):
         siblinglast = request.form["SiblingLast"]
         disability = request.form["Disabilities"]
         health = request.form["Health"]
+        gifted = request.form["gt"]
+        if gifted == "No":
+            gifted = 0
+        else:
+            gifted = 1
+        misc = request.form["description"]
         ell = request.form["English"]
         if ell == "No":
             ell = 0
@@ -239,15 +245,34 @@ class HandleStaff(Resource):
         result = cursor.fetchall()
         for row in result:
             for col in row:
-                values = (str(col), '', '', '', '', '', '', '', '', '', '1000-01-01', '0', '', '', '', year, grade, status,
-                          ell, '', year, grade, status, ell)
+                values = (str(col), '', '', '', '', '', '', '', '', '', '1000-01-01', '0', '', '', '', gifted, year,
+                          grade,
+                          status, ell, misc, year, grade, status, ell, misc, gifted)
                 query = "Insert into `databasegroupproject`.`student` values (\'%s\', \'%s\', \'%s\',\'%s\',\'%s\'," \
                         "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\'," \
-                        "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\') on duplicate key update YearAccepted=" \
+                        "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\') on duplicate key update " \
+                        "YearAccepted=" \
                         "\'%s\', GradeWhenAccepted=\'%s\', " \
-                        "Status=\'%s\', ELL=\'%s\'"
+                        "Status=\'%s\', ELL=\'%s\', misc=\'%s\',GTProgram=\'%s\'"
+                query = query % values
+                cursor.execute(query)
+
+                if funded == "no":
+                    nch = "no"
+                    funded = 0
+                else:
+                    if status == "Graduated":
+                        nch = "yes"
+                    else:
+                        nch = "no"
+                    funded = 1
+                query = "Insert into `databasegroupproject`.`funding` values (\'%s\',\'%s\',\'%s\',\'%s\') " \
+                        "on duplicate key update Funding=\'%s\', grant=\'%s\', national clearing house info=\'%s\'"
+                values = (str(col), funded, grant, nch, funded, grant, nch)
                 query = query % values
                 print(query)
+                cursor.execute(query)
+                conn.commit()
                 return make_response(render_template('success.html'), 200, headers)
         return make_response(render_template('staff.html'), 200, headers)
 
