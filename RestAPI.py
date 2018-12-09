@@ -15,10 +15,11 @@
 # The flask_restful imports help with streamlining the api creation process so it is much more managable
 #   trying to code this without using the Flask_restful tools could be a problem with medium/large programs
 # The JSON import is what will handle converting the mysql tuple data into an easier to handle JSON format.
-from flask import Flask, flash,redirect,session,abort, request, render_template, make_response
+from flask import Flask, flash,redirect,session,abort, request, render_template, make_response, url_for
 from flask_restful import Resource, Api, reqparse
 from flaskext.mysql import MySQL
 from flask_user import login_required, user_manager, user_mixin, SQLAlchemyAdapter
+from functools import wraps
 
 import json
 import os
@@ -78,29 +79,43 @@ def home():
 def do_login():
     password = request.form['password']
     username = request.form['username']
-    query = "select password from `databasegroupproject`.`user` where username=%s"
-    cursor = conn.cursor()
-    cursor.execute(query, username)
-    result = cursor.fetchall()
-    for row in result:
-        for col in row:
-            tempPass1 = col
-            query = "select password from `databasegroupproject`.`admin` where username=%s"
-            cursor.execute(query, username)
-            result = cursor.fetchall()
-            for row2 in result:
-                for col2 in row2:
-                    tempPass2 = col2
-                    if password == tempPass1:
-                        session['logged_in'] = True
-                        session['username'] = username
-                        flash('Welcome back, '+username)
-                    elif password == tempPass2:
-                        session['logged_in'] = True
-                        session['username'] = username
-                        flash('Welcome back administrator' + username)
-                    else:
-                        flash('wrong password!', 'danger')
+    if(password=='password' and username=='student'):
+        print('good name')
+        session['logged_in'] = True
+        session['username'] = username
+        session['role'] = 'student'
+        print(session['role'])
+    if (password == 'password' and username == 'admin'):
+        print('good name')
+        session['logged_in'] = True
+        session['username'] = username
+        session['role'] = 'admin'
+        print(session['role'])
+    # query = "select password from `databasegroupproject`.`user` where username=%s"
+    # cursor = conn.cursor()
+    # cursor.execute(query, username)
+    # result = cursor.fetchall()
+    # for row in result:
+    #     for col in row:
+    #         tempPass1 = col
+    #         query = "select password from `databasegroupproject`.`admin` where username=%s"
+    #         cursor.execute(query, username)
+    #         result = cursor.fetchall()
+    #         for row2 in result:
+    #             for col2 in row2:
+    #                 tempPass2 = col2
+    #                 if password == tempPass1:
+    #                     session['logged_in'] = True
+    #                     session['username'] = username
+    #                     session['role'] = 'student'
+    #                     flash('Welcome back, '+username)
+    #                 elif password == tempPass2:
+    #                     session['logged_in'] = True
+    #                     session['username'] = username
+    #                     session['role'] = 'staff'
+    #                     flash('Welcome back administrator' + username)
+    #                 else:
+    #                     flash('wrong password!', 'danger')
     return home()
 
 @app.route("/logout")
@@ -125,6 +140,19 @@ def logout():
 #             return make_response(render_template('index.html'), 200, headers)
 
 
+def requires_roles(*roles):
+    print('checking role')
+    def wrapper(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            print(session)
+            if session['role'] in roles:
+                return f(*args, **kwargs)
+            else:
+                flash('not allowed', 'danger')
+                return redirect(url_for('home'))
+        return wrapped
+    return wrapper
 # this class is a simple helloWorld response to a HTTP GET request or an echo response to a POST request.
 class HelloWorld(Resource):
     #    @app.route('/')
@@ -256,6 +284,7 @@ class StudentApply(Resource):
 
 
 class Staff(Resource):
+    @requires_roles('admin')
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('staff.html'), 200, headers)
@@ -403,6 +432,7 @@ class HandleStaffSignIn(Resource):
 
 
 class staffNewUser(Resource):
+    @requires_roles('admin')
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('staffCreateUser.html'), 200, headers)
