@@ -223,28 +223,36 @@ class HandleStaff(Resource):
         print(request.form)
         student = request.form["studentUsername"]
         year = request.form["Year"]
+        grade = request.form["grade"]
         status = request.form["Status"]
         funded = request.form["Funded"]
         grant = request.form["Grant"]
         first = request.form["First"]
         last = request.form["Last"]
-        siblingFirst = request.form["SiblingFirst"]
-        siblingLast = request.form["SiblingLast"]
+        siblingfirst = request.form["SiblingFirst"]
+        siblinglast = request.form["SiblingLast"]
         disability = request.form["Disabilities"]
         health = request.form["Health"]
         ell = request.form["English"]
+        if ell == "No":
+            ell = 0
+        else:
+            ell = 1
         query = "select idStudent from `databasegroupproject`.`user` where username=%s"
         cursor = conn.cursor()
         cursor.execute(query, student)
         result = cursor.fetchall()
         for row in result:
             for col in row:
-                values = (col, year, grade, status, funded, grant, first, last, siblingFirst, siblingLast, disability,
-                          health, ell, year, grade, status, ell)
-                query = "Insert into `databasegroupproject`.`student` values (%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s," \
-                        "%s,%s,%s,%s,%s,%s,%s) on duplicate key update YearAccepted=%s, GradeWhenAccepted=%s, " \
-                        "Status=%s, ELL=%s"
-                print(query % values)
+                values = (str(col), '', '', '', '', '', '', '', '', '', '1000-01-01', '0', '', '', '', year, grade, status,
+                          ell, '', year, grade, status, ell)
+                query = "Insert into `databasegroupproject`.`student` values (\'%s\', \'%s\', \'%s\',\'%s\',\'%s\'," \
+                        "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\'," \
+                        "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\') on duplicate key update YearAccepted=" \
+                        "\'%s\', GradeWhenAccepted=\'%s\', " \
+                        "Status=\'%s\', ELL=\'%s\'"
+                query = query % values
+                print(query)
                 return make_response(render_template('success.html'), 200, headers)
         return make_response(render_template('staff.html'), 200, headers)
 
