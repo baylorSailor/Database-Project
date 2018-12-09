@@ -19,6 +19,7 @@ from flask import Flask, flash,redirect,session,abort, request, render_template,
 from flask_restful import Resource, Api, reqparse
 from flaskext.mysql import MySQL
 import json
+import os
 
 # these lines are establish the setup for the API.
 # The Flask() function call assigns the name "main" to this instance
@@ -338,4 +339,5 @@ api.add_resource(HandleStaff, '/handleStaff')
 
 
 if __name__ == '__main__':
+    app.secret_key = os.urandom(12)
     app.run(debug=True)
