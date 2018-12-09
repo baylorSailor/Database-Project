@@ -503,7 +503,6 @@ class handleCreateClass(Resource):
         level = request.form["level"]
         name = request.form["className"]
         capacity = request.form["capacity"]
-        year = request.form["year"]
         room = request.form["room"]
         instructor = request.form["instructor"]
         cost = request.form["cost"]
