@@ -533,7 +533,7 @@ api.add_resource(HandleStaff, '/handleStaff')
 api.add_resource(showClasses, '/showClasses')
 api.add_resource(createClass, '/createClass')
 api.add_resource(handleCreateClass, '/handleCreateClass')
-api.add_resource(staffIndex, '/staffindex')
+api.add_resource(staffIndex, '/staffIndex')
 #this will finally run our server once all other aspects of it hav ebeen created.
 
 
