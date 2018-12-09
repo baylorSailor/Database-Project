@@ -499,6 +499,27 @@ class createClass(Resource):
 class handleCreateClass(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
+        print(request.form)
+        level = request.form["level"]
+        name = request.form["className"]
+        capacity = request.form["capacity"]
+        year = request.form["year"]
+        room = request.form["room"]
+        instructor = request.form["instructor"]
+        cost = request.form["cost"]
+        query = "select * from `databasegroupproject`.`classes`"
+        cursor = conn.cursor()
+        cursor.execute(query)
+        result = cursor.fetchall()
+        for row in result:
+            print(row)
+        query = "insert into `databasegroupproject`.`classes` (level, name, capacity, room, instructor, cost) values (\'%s\', \'%s\', \'%s\', \'%s\', \'%s\'," \
+                " \'%s\')"
+        values = (level, name, capacity, room, instructor, cost)
+        query = query % values
+        print(query)
+        cursor.execute(query)
+        conn.commit()
         return make_response(render_template('success.html'), 200, headers)
 
 class staffIndex(Resource):
