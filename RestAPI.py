@@ -15,7 +15,7 @@
 # The flask_restful imports help with streamlining the api creation process so it is much more managable
 #   trying to code this without using the Flask_restful tools could be a problem with medium/large programs
 # The JSON import is what will handle converting the mysql tuple data into an easier to handle JSON format.
-from flask import Flask, flash, request, render_template, make_response
+from flask import Flask, flash,redirect,session,abort, request, render_template, make_response
 from flask_restful import Resource, Api, reqparse
 from flaskext.mysql import MySQL
 import json
@@ -48,6 +48,7 @@ conn = mysql.connect()
 # this class is a simple helloWorld response to a HTTP GET request or an echo response to a POST request.
 class HelloWorld(Resource):
     #    @app.route('/')
+
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('index.html'), 200, headers)
@@ -55,6 +56,16 @@ class HelloWorld(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('success.html'), 200, headers)
+    # def home(self):
+    #     if not session.get('logged_in'):
+    #         return render_template('login.html')
+    #     else:
+    #         headers = {'Content-Type': 'text/html'}
+    #         return make_response(render_template('index.html'), 200, headers)
+    #
+    # def post(self):
+    #     headers = {'Content-Type': 'text/html'}
+    #     return make_response(render_template('success.html'), 200, headers)
 
 
 # This class will take a GET request that also contains a key value called 'num'.
@@ -164,6 +175,11 @@ class Staff(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('staff.html'), 200, headers)
 
+class HandleStaff(Resource):
+    def post(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('success.html'), 200, headers)
+
 
 class StudentSignIn(Resource):
     def get(self):
@@ -246,9 +262,9 @@ api.add_resource(StudentSignIn, '/studentSignIn')
 api.add_resource(HandleStudentSignIn, '/handleStudentSignIn')
 api.add_resource(StaffSignIn, '/staffSignIn')
 api.add_resource(HandleStaffSignIn, '/handleStaffSignIn')
-
 api.add_resource(staffNewUser, '/staffNewUser')
 api.add_resource(handleStaffNewUser, '/handleStaffNewUser')
+api.add_resource(HandleStaff, '/handleStaff')
 #this will finally run our server once all other aspects of it hav ebeen created.
 if __name__ == '__main__':
     app.run(debug=True)
