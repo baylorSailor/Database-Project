@@ -75,16 +75,33 @@ def home():
 
 
 @app.route('/HandleLogin', methods=['POST'])
-def do_admin_login():
-    if request.form['password'] == 'password' and request.form['username'] == 'admin':
-        session['logged_in'] = True
-        flash('login successful', 'success')
-    else:
-        flash('wrong password!','danger')
+def do_login():
+    password = request.form['password']
+    username = request.form['username']
+    query = "select password from `databasegroupproject`.`user` where username=%s"
+    cursor = conn.cursor()
+    cursor.execute(query, username)
+    result = cursor.fetchall()
+    for row in result:
+        for col in row:
+            tempPass1 = col
+            query = "select password from `databasegroupproject`.`admin` where username=%s"
+            cursor.execute(query, username)
+            result = cursor.fetchall()
+            for row2 in result:
+                for col2 in row2:
+                    tempPass2 = col2
+                    if password == tempPass1:
+                        session['logged_in'] = True
+                    elif password == tempPass2:
+                        session['logged_in'] = True
+                    else:
+                        flash('wrong password!', 'danger')
     return home()
 
 @app.route("/logout")
 def logout():
+    flash('logout successful', 'success')
     session['logged_in'] = False
     return home()
 # class Login(Resource):
@@ -188,12 +205,6 @@ class StudentRegister(Resource):
 
     def post(self):
         cursor = conn.cursor()
-        print(request.form)
-        query = "INSERT INTO `databasegroupproject`.`student` (`FirstName`, `LastName`, `MiddleInitial`, `Suffix`," \
-                " `NickName`, `Address`, `City`, `State`, `ZIP`, `Birthdate`, `Gender`, `Race`, `Email`, " \
-                "`Phone Number`, `GTProgram`, `YearAccepted`, `GradeWhenAccepted`, `Status`, `ELL`, `MISC`) VALUES " \
-                "(\'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', " \
-                "\'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\')"
         first = request.form["First"]
         last = request.form["Last"]
         middle = request.form["Middle"]
@@ -202,7 +213,7 @@ class StudentRegister(Resource):
         address = request.form["Address"]
         city = request.form["City"]
         state = request.form["State"]
-        zip = request.form["Zip"]
+        zipcode = request.form["Zip"]
         birth = request.form["Birthdate"]
         if request.form["Gender"] == "M":
             gender = 0
@@ -217,8 +228,10 @@ class StudentRegister(Resource):
         phone = request.form["Phone"]
         siblingusername = request.form["SiblingUsername"]
 
-        values = (first, last, middle, suffix, preffered, address, city, state, zip, birth, str(gender), race, email,
-                  phone, 'N/A', 'N/A', 'N/A', 'Applying', '0', 'N/A')
+        query = "INSERT INTO `databasegroupproject`.`applications` values (\'%s\', \'%s\', \'%s\', \'%s\',\'%s\'," \
+                "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')"
+        values = (first, last, middle, suffix, preffered, address, city, state, zipcode, birth, str(gender), race, email,
+                  phone, schooltype, district, schoolname, graddate, siblingusername)
         query = query % values
         cursor.execute(query)
         conn.commit()
@@ -246,7 +259,6 @@ class Staff(Resource):
 class HandleStaff(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
-        print(request.form)
         student = request.form["studentUsername"]
         year = request.form["Year"]
         grade = request.form["grade"]
@@ -300,7 +312,6 @@ class HandleStaff(Resource):
                         "on duplicate key update Funding=\'%s\', grantname=\'%s\', nationalclearinghouseinfo=\'%s\'"
                 values = (str(col), funded, grant, nch, funded, grant, nch)
                 query = query % values
-                print(query)
                 cursor.execute(query)
 
                 mentor = firstmentor + " " + lastmentor
@@ -308,7 +319,6 @@ class HandleStaff(Resource):
                         "on duplicate key update mentorname=\'%s\'"
                 values = (str(col), mentor, mentor)
                 query = query % values
-                print(query)
                 cursor.execute(query)
 
                 query = "select idStudent from `databasegroupproject`.`user` where username=%s"
@@ -423,7 +433,7 @@ class handleStaffNewUser(Resource):
                     if column == username:
                         return make_response(render_template('staffCreateUser.html'), 200, headers)
             query = "Insert into `databasegroupproject`.`user` (username, password) Values (%s,%s)"
-            values = (username,password)
+            values = (username, password)
             cursor.execute(query, values)
             conn.commit()
         return make_response(render_template('success.html'), 200, headers)
