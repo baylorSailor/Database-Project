@@ -45,6 +45,39 @@ mysql.init_app(app)
 conn = mysql.connect()
 
 
+@app.route('/login')
+def home():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('index.html'), 200, headers)
+
+
+@app.route('/HandleLogin', methods=['POST'])
+def do_admin_login():
+    if request.form['password'] == 'password' and request.form['username'] == 'admin':
+        session['logged_in'] = True
+    else:
+        flash('wrong password!')
+    return home()
+# class Login(Resource):
+#     def home(self):
+#         if not session.get('logged_in'):
+#             return render_template('login.html')
+#         else:
+#             headers = {'Content-Type': 'text/html'}
+#             return make_response(render_template('index.html'), 200, headers)
+#
+# class HandleLogin(Resource):
+#     def do_admin_login(self):
+#         if request.form['password']: == 'password' and request.form ['']
+#             return render_template('login.html')
+#         else:
+#             headers = {'Content-Type': 'text/html'}
+#             return make_response(render_template('index.html'), 200, headers)
+
+
 # this class is a simple helloWorld response to a HTTP GET request or an echo response to a POST request.
 class HelloWorld(Resource):
     #    @app.route('/')
@@ -71,6 +104,9 @@ class HelloWorld(Resource):
 # This class will take a GET request that also contains a key value called 'num'.
 # it will take the number that is paired with 'num', multiply it by 10 and return it to the front-end service.
 # CURRENTLY DOES NOT WORK
+
+
+
 class Multi(Resource):
     def get(self, num):
         return {'result': num * 10}
