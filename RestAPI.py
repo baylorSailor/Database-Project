@@ -178,6 +178,7 @@ class Staff(Resource):
 class HandleStaff(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
+        print(request.form)
         return make_response(render_template('success.html'), 200, headers)
 
 
@@ -253,7 +254,7 @@ class handleStaffNewUser(Resource):
             query = "Insert into `databasegroupproject`.`admin` Values (%s,%s)"
             values = (username, password)
             cursor = conn.cursor()
-            cursor.execute(query,values)
+            cursor.execute(query, values)
             conn.commit()
         else:
             query = "select username from `databasegroupproject`.`user` where username=%s"
