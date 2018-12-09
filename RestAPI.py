@@ -45,7 +45,23 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 # attempting the mysql connection with our Flask app's mysql configurations.
 mysql.init_app(app)
 conn = mysql.connect()
+ACCESS = {
+    'guest': 0,
+    'user': 1,
+    'admin': 2
+}
 
+class User():
+    def __init__(self, username, password, access=ACCESS['user']):
+        self.username = username
+        self.password = password
+        self.access = access
+
+    def is_admin(self):
+        return self.access == ACCESS['admin']
+
+    def allowed(self, access_level):
+        return self.access >= access_level
 
 @app.route('/login')
 def home():
