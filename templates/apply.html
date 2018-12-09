@@ -178,8 +178,8 @@
 
         <p>Do you have a sibling currently enrolled in UYP?
             <select name="isSibling" onchange=siblingCheck(this)>
-                <option value="no">yes</option>
-                 <option value="yes">no</option>
+                <option value="yes">yes</option>
+                 <option value="no">no</option>
             </select>
         </p>
 
@@ -213,11 +213,11 @@
     }
 
     function siblingCheck(that) {
-        if (that.value =="yes") {
+        if (that.value =="no") {
             document.getElementById("sUsername").style.display = "none";
             document.getElementById("siblingUsername").value = '';
         }
-        if (that.value =="no") {
+        if (that.value =="yes") {
             document.getElementById("sUsername").style.display = "block";
             document.getElementById("siblingUsername").value = '';
         }
