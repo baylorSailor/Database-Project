@@ -162,6 +162,8 @@ class StudentApply(Resource):
 class Staff(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
+        year = request.form["Year"]
+        print(year)
         return make_response(render_template('staff.html'), 200, headers)
 
 
@@ -237,7 +239,7 @@ class handleStaffNewUser(Resource):
             query = "Insert into `databasegroupproject`.`admin` Values (%s,%s)"
             values = (username, password)
             cursor = conn.cursor()
-            cursor.execute(query,values)
+            cursor.execute(query, values)
             conn.commit()
         else:
             query = "select username from `databasegroupproject`.`user` where username=%s"
