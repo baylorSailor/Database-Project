@@ -158,11 +158,13 @@ def requires_roles(*roles):
         @wraps(f)
         def wrapped(*args, **kwargs):
             print(session)
-            if session['role'] in roles:
+            if not session.get('logged_in'):
+                return redirect(url_for('home'))
+            elif session['role'] in roles:
                 return f(*args, **kwargs)
             else:
                 flash('not allowed', 'danger')
-                return redirect(url_for('home'))
+                return redirect(url_for('HelloWorld'))
         return wrapped
     return wrapper
 # this class is a simple helloWorld response to a HTTP GET request or an echo response to a POST request.
