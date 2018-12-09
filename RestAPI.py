@@ -93,8 +93,12 @@ def do_login():
                     tempPass2 = col2
                     if password == tempPass1:
                         session['logged_in'] = True
+                        session['username'] = username
+                        flash('Welcome back, '+username)
                     elif password == tempPass2:
                         session['logged_in'] = True
+                        session['username'] = username
+                        flash('Welcome back administrator' + username)
                     else:
                         flash('wrong password!', 'danger')
     return home()
