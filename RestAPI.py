@@ -76,8 +76,13 @@ def home():
 
 @app.route('/HandleLogin', methods=['POST'])
 def do_login():
+    print("Session")
+    print(session)
+    print("End")
     password = request.form['password']
     username = request.form['username']
+    tempPass1 = ''
+    tempPass2 = ''
     query = "select password from `databasegroupproject`.`user` where username=%s"
     cursor = conn.cursor()
     cursor.execute(query, username)
@@ -85,22 +90,28 @@ def do_login():
     for row in result:
         for col in row:
             tempPass1 = col
-            query = "select password from `databasegroupproject`.`admin` where username=%s"
-            cursor.execute(query, username)
-            result = cursor.fetchall()
-            for row2 in result:
-                for col2 in row2:
-                    tempPass2 = col2
-                    if password == tempPass1:
-                        session['logged_in'] = True
-                        session['username'] = username
-                        flash('Welcome back, '+username)
-                    elif password == tempPass2:
-                        session['logged_in'] = True
-                        session['username'] = username
-                        flash('Welcome back administrator' + username)
-                    else:
-                        flash('wrong password!', 'danger')
+    query = "select password from `databasegroupproject`.`admin` where username=%s"
+    cursor.execute(query, username)
+    result = cursor.fetchall()
+    for row2 in result:
+        for col2 in row2:
+            tempPass2 = col2
+    if password == tempPass1:
+        session['logged_in'] = True
+        session['username'] = username
+        print("SessionT")
+        print(session)
+        print("End")
+        flash('Welcome back, '+username)
+    elif password == tempPass2:
+        session['logged_in'] = True
+        session['username'] = username
+        print("SessionT")
+        print(session)
+        print("End")
+        flash('Welcome back administrator ' + username)
+    else:
+        flash('wrong password!', 'danger')
     return home()
 
 @app.route("/logout")
