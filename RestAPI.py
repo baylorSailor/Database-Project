@@ -62,6 +62,11 @@ def do_admin_login():
     else:
         flash('wrong password!')
     return home()
+
+@app.route("/logout")
+def logout():
+    session['logged_in'] = False
+    return home()
 # class Login(Resource):
 #     def home(self):
 #         if not session.get('logged_in'):
