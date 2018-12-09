@@ -89,7 +89,9 @@ def do_login():
             for row2 in result:
                 for col2 in row2:
                     tempPass2 = col2
-                    if password == tempPass1 or password == tempPass2:
+                    if password == tempPass1:
+                        session['logged_in'] = True
+                    elif password == tempPass2:
                         session['logged_in'] = True
                     else:
                         flash('wrong password!', 'danger')
@@ -201,7 +203,6 @@ class StudentRegister(Resource):
 
     def post(self):
         cursor = conn.cursor()
-        print(request.form)
         first = request.form["First"]
         last = request.form["Last"]
         middle = request.form["Middle"]
@@ -229,10 +230,7 @@ class StudentRegister(Resource):
                 "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')"
         values = (first, last, middle, suffix, preffered, address, city, state, zipcode, birth, str(gender), race, email,
                   phone, schooltype, district, schoolname, graddate, siblingusername)
-        print(query)
-        print(values)
         query = query % values
-        print(query)
         cursor.execute(query)
         conn.commit()
         headers = {'Content-Type': 'text/html'}
@@ -259,7 +257,6 @@ class Staff(Resource):
 class HandleStaff(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
-        print(request.form)
         student = request.form["studentUsername"]
         year = request.form["Year"]
         grade = request.form["grade"]
@@ -313,7 +310,6 @@ class HandleStaff(Resource):
                         "on duplicate key update Funding=\'%s\', grantname=\'%s\', nationalclearinghouseinfo=\'%s\'"
                 values = (str(col), funded, grant, nch, funded, grant, nch)
                 query = query % values
-                print(query)
                 cursor.execute(query)
 
                 mentor = firstmentor + " " + lastmentor
@@ -321,7 +317,6 @@ class HandleStaff(Resource):
                         "on duplicate key update mentorname=\'%s\'"
                 values = (str(col), mentor, mentor)
                 query = query % values
-                print(query)
                 cursor.execute(query)
 
                 query = "select idStudent from `databasegroupproject`.`user` where username=%s"
