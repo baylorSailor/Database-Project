@@ -179,7 +179,33 @@ class HandleStaff(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
         print(request.form)
-        return make_response(render_template('success.html'), 200, headers)
+        student = request.form["studentUsername"]
+        year = request.form["Year"]
+        status = request.form["Status"]
+        funded = request.form["Funded"]
+        grant = request.form["Grant"]
+        first = request.form["First"]
+        last = request.form["Last"]
+        siblingFirst = request.form["SiblingFirst"]
+        siblingLast = request.form["SiblingLast"]
+        disability = request.form["Disabilities"]
+        health = request.form["Health"]
+        ell = request.form["English"]
+        query = "select idStudent from `databasegroupproject`.`user` where username=%s"
+        cursor = conn.cursor()
+        cursor.execute(query, student)
+        result = cursor.fetchall()
+        for row in result:
+            for col in row:
+                values = (col, year, grade, status, funded, grant, first, last, siblingFirst, siblingLast, disability,
+                          health, ell, year, grade, status, ell)
+                query = "Insert into `databasegroupproject`.`student` values (%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s," \
+                        "%s,%s,%s,%s,%s,%s,%s) on duplicate key update YearAccepted=%s, GradeWhenAccepted=%s, " \
+                        "Status=%s, ELL=%s"
+                print(query % values)
+                return make_response(render_template('success.html'), 200, headers)
+        return make_response(render_template('staff.html'), 200, headers)
+
 
 
 class StudentSignIn(Resource):
