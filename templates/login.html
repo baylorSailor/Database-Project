@@ -27,6 +27,21 @@
     <h1>
         User Log In
     </h1>
+
+    {% block body %}
+{% if session['logged_in'] %}
+<p>You're logged in already!</p>
+{% else %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <form action="http://127.0.0.1:5000/HandleLogin" method="post" id="applicationForm" name="studentApp">
         <p>Username:
             <input type="text" name="username" size="20" maxlength="20"/>
@@ -37,6 +52,8 @@
         </p>
         <input type="submit" name="submit" value="submit"/>
     </form>
+    {% endif %}
+    {% endblock %}
 </div>
 </body>
 </html>
