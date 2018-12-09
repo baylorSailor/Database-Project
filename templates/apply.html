@@ -177,17 +177,17 @@
         <hr/>
 
         <p>Do you have a sibling currently enrolled in UYP?
-            <input type="radio" name="isSibling" value="Yes"/> Yes
-            <input type="radio" name="isSibling" value="No" checked="checked"/> No
+            <select name="isSibling" onchange=siblingCheck(this)>
+                <option value="no">yes</option>
+                 <option value="yes">no</option>
+            </select>
         </p>
 
-        <p>Sibling's First Name:
-            <input type="text" name="SiblingFirst" size="15" maxlength="25"/>
+        <div id = "sUsername">
+        <p>Sibling's  userName:
+            <input type="text" id = "siblingUsername" name="SiblingUsername" size="15" maxlength="25"/>
         </p>
-
-        <p>Sibling's Last Name:
-            <input type="text" name="SiblingLast" size="15" maxlength="25"/>
-        </p>
+        </div>
         <input type="submit" name="submit" value="submit"/>
 
     </form>
@@ -209,6 +209,17 @@
         if (that.value == "public") {
             document.getElementById("district").style.display = "block";
             document.getElementById("schoolName").style.display = "block";
+        }
+    }
+
+    function siblingCheck(that) {
+        if (that.value =="no") {
+            document.getElementById("sUsername").style.display = "none";
+            document.getElementById("siblingUsername").value = '';
+        }
+        if (that.value =="yes") {
+            document.getElementById("sUsername").style.display = "block";
+            document.getElementById("siblingUsername").value = '';
         }
     }
 </script>

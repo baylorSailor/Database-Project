@@ -18,6 +18,7 @@
 from flask import Flask, flash,redirect,session,abort, request, render_template, make_response
 from flask_restful import Resource, Api, reqparse
 from flaskext.mysql import MySQL
+
 import json
 import os
 
@@ -59,8 +60,9 @@ def home():
 def do_admin_login():
     if request.form['password'] == 'password' and request.form['username'] == 'admin':
         session['logged_in'] = True
+        flash('login successful', 'success')
     else:
-        flash('wrong password!')
+        flash('wrong password!','danger')
     return home()
 
 @app.route("/logout")
