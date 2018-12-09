@@ -168,6 +168,7 @@ class StudentRegister(Resource):
 
     def post(self):
         cursor = conn.cursor()
+        print(request.form)
         query = "INSERT INTO `databasegroupproject`.`student` (`FirstName`, `LastName`, `MiddleInitial`, `Suffix`," \
                 " `NickName`, `Address`, `City`, `State`, `ZIP`, `Birthdate`, `Gender`, `Race`, `Email`, " \
                 "`Phone Number`, `GTProgram`, `YearAccepted`, `GradeWhenAccepted`, `Status`, `ELL`, `MISC`) VALUES " \
@@ -188,8 +189,13 @@ class StudentRegister(Resource):
         else:
             gender = 1
         race = request.form["Race"]
+        schooltype = request.form["schoolType"]
+        district = request.form["District"]
+        schoolname = request.form["HighSchool"]
+        graddate = request.form["GradDate"]
         email = request.form["Email"]
         phone = request.form["Phone"]
+        siblingusername = request.form["SiblingUsername"]
 
         values = (first, last, middle, suffix, preffered, address, city, state, zip, birth, str(gender), race, email,
                   phone, 'N/A', 'N/A', 'N/A', 'Applying', '0', 'N/A')
@@ -229,7 +235,7 @@ class HandleStaff(Resource):
         grant = request.form["Grant"]
         firstmentor = request.form["First"]
         lastmentor = request.form["Last"]
-        siblinguser = request.form["SiblingFirst"]
+        siblinguser = request.form["SiblingUsername"]
         disability = request.form["Disabilities"]
         health = request.form["Health"]
         gifted = request.form["gt"]
@@ -285,7 +291,28 @@ class HandleStaff(Resource):
                 print(query)
                 cursor.execute(query)
 
+                query = "select idStudent from `databasegroupproject`.`user` where username=%s"
+                cursor.execute(query, siblinguser)
+                result = cursor.fetchall()
+                for newR in result:
+                    for newC in newR:
+                        query = "insert into `databasegroupproject`.`sibling` values (\'%s\',\'%s\') " \
+                                "on duplicate key update idSibling = \'%s\'"
+                        values = (str(col), str(newC), str(newC))
+                        query = query % values
+                        cursor.execute(query)
 
+                query = "insert into `databasegroupproject`.`health condition` values (\'%s\',\'%s\') " \
+                        "on duplicate key update type=\'%s\'"
+                values = (str(col), health, health)
+                query = query % values
+                cursor.execute(query)
+
+                query = "insert into `databasegroupproject`.`disability` values (\'%s\',\'%s\') " \
+                        "on duplicate key update type=\'%s\'"
+                values = (str(col), disability, disability)
+                query = query % values
+                cursor.execute(query)
                 conn.commit()
                 return make_response(render_template('success.html'), 200, headers)
         return make_response(render_template('staff.html'), 200, headers)
