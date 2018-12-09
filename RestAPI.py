@@ -227,10 +227,9 @@ class HandleStaff(Resource):
         status = request.form["Status"]
         funded = request.form["Funded"]
         grant = request.form["Grant"]
-        first = request.form["First"]
-        last = request.form["Last"]
-        siblingfirst = request.form["SiblingFirst"]
-        siblinglast = request.form["SiblingLast"]
+        firstmentor = request.form["First"]
+        lastmentor = request.form["Last"]
+        siblinguser = request.form["SiblingFirst"]
         disability = request.form["Disabilities"]
         health = request.form["Health"]
         gifted = request.form["gt"]
@@ -272,11 +271,21 @@ class HandleStaff(Resource):
                         nch = "no"
                     funded = 1
                 query = "Insert into `databasegroupproject`.`funding` values (\'%s\',\'%s\',\'%s\',\'%s\') " \
-                        "on duplicate key update Funding=\'%s\', grant=\'%s\', national clearing house info=\'%s\'"
+                        "on duplicate key update Funding=\'%s\', grantname=\'%s\', nationalclearinghouseinfo=\'%s\'"
                 values = (str(col), funded, grant, nch, funded, grant, nch)
                 query = query % values
                 print(query)
                 cursor.execute(query)
+
+                mentor = firstmentor + " " + lastmentor
+                query = "insert into `databasegroupproject`.`mentor` values (\'%s\',\'%s\') " \
+                        "on duplicate key update mentorname=\'%s\'"
+                values = (str(col), mentor, mentor)
+                query = query % values
+                print(query)
+                cursor.execute(query)
+
+
                 conn.commit()
                 return make_response(render_template('success.html'), 200, headers)
         return make_response(render_template('staff.html'), 200, headers)
