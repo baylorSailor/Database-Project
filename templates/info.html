@@ -4,7 +4,6 @@
 <head>
     <title>UYP Home</title>
     <link href="../static/styles.css" type="text/css" rel="stylesheet"/>
-    <script type="text/javascript" src="{{ url_for('static', filename='rowSelect.js') }}"></script>
     <style>
         .queryTable {
             font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -14,6 +13,7 @@
 
         .queryTable td, .queryTable th {
             border: 1px solid #ddd;
+            padding: 8px;
         }
 
         .queryTable tr:nth-child(even) {
@@ -47,8 +47,9 @@
     <a href="\studentRegister">register for classes</a>
 </nav>
 <body>
-<div class="infoSheet" id="welcomeSheet" style="width: 90%">
-    <h1>Available classes</h1>
+
+<div class="infoSheet" id="studentSheet" style="width: 90%">
+    <h1>StudentInfo</h1>
     <div id="nav">
         <ul>
             <table class="queryTable" id="queryTable">
@@ -57,7 +58,7 @@
                 <th scope="col">M.I</th>
                 <th scope="col">Suffix</th>
                 <th scope="col">Nickname</th>
-                <th scope="col">Address</th>
+                <th scope="col">Sddress</th>
                 <th scope="col">City</th>
                 <th scope="col">State</th>
                 <th scope="col">Zip</th>
@@ -84,32 +85,45 @@
     </div>
 </div>
 <hr>
-<div class="infoSheet" >
-<form action="http://127.0.0.1:5000/handleNewStudent" method="post" id="applicationForm" name="studentForm">
-    <h2>Select Student:</h2>
-        <p>First Name:
-            <input type="text" name="firstName" size="20" maxlength="20"/>
-        </p>
+<div class="infoSheet" id="classSheet">
+    <h1>Registered classes</h1>
+        <ul>
+            <table class="queryTable">
+                <th scope="col">Level</th>
+                <th scope="col">Title</th>
+                <th scope="col">Room</th>
+                <th scope="col">Teacher</th>
+                <th scope="col">Cost</th>
+                {% for row in stdata %}
+                <tr>
+                    {% for d in row %}
+                    <td>{{ d }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </ul>
+</div>
+<hr>
+<div class="infoSheet" id="sessionSheet">
+    <h1>Registered Sessions</h1>
+        <ul>
+            <table class="queryTable">
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                {% for row in sdata %}
+                <tr>
+                    {% for d in row %}
+                    <td>{{ d }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </ul>
+</div>
 
-        <p>Last Name:
-            <input type="text" name="lastName" size="20" maxlength="20"/>
-        </p>
-
-    <p> Address:
-            <input type="text" name="address" size="20" maxlength="45"/>
-        </p>
-    <div>
-        <input type="submit" name="accept" value="accept"/>
-        <input type="submit" name="reject" value="reject"/>
-    </div>
-    </form>
-    </div>
 </body>
 
-<script>
-    //function getID(that) {
-    //    alert('row '+ that.parentNode.parentNode.rowIndex);
-   // }
-
-</script>
 </html>

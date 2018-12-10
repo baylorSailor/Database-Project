@@ -736,6 +736,32 @@ class acceptStudents(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('success.html'), 200, headers)
+
+class displayInfo(Resource):
+    def get(self):
+        try:
+            query = "SELECT * from `databasegroupproject`.`session`"
+            cursor = conn.cursor()
+            cursor.execute(query)
+            data = cursor.fetchall()
+
+            query2 = "SELECT * from `databasegroupproject`.`classes`"
+            cursor.execute(query2)
+            sdata = cursor.fetchall()
+
+            query3 = "SELECT * from `databasegroupproject`.`classes`"
+            cursor.execute(query3)
+            stdata = cursor.fetchall()
+            return make_response(render_template("studentRegister.html", data=data, sdata=sdata, stdata=stdata))
+        except Exception as e:
+            return str(e)
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('info.html'), 200, headers)
+
+class handleNewStudent(Resource):
+    def post(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('success.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
@@ -773,6 +799,8 @@ api.add_resource(handleClassSession, '/handleClassSession')
 api.add_resource(studentClassRegister, '/studentRegister')
 api.add_resource(handleStudentClassRegister, '/handleStudentRegister')
 api.add_resource(showStudents, '/showStudents')
+api.add_resource(displayInfo, '/Info')
+api.add_resource(handleNewStudent, '/handleNewStudent')
 #this will finally run our server once all other aspects of it hav ebeen created.
 
 
