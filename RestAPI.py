@@ -735,6 +735,7 @@ class handleClassSession(Resource):
         return make_response(render_template('success.html'), 200, headers)
 
 class studentClassRegister(Resource):
+    @requires_roles('admin','student')
     def get(self):
         try:
             query = "select s.idSession, c.idClass, c.level, c.name, c.capacity, c.enrolled, c.room, c.instructor, c.cost, s.startdate, " \
@@ -795,6 +796,7 @@ class acceptStudents(Resource):
         return make_response(render_template('success.html'), 200, headers)
 
 class displayInfo(Resource):
+    @requires_roles('admin','student')
     def get(self):
         try:
             query = "SELECT firstname, lastname, middleinitial, suffix, nickname, address, city, state, zip, " \
