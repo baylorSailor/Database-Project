@@ -47,9 +47,8 @@
 
 </nav>
 <body>
-<div class="infoSheet" id="welcomeSheet">
+<div class="infoSheet" id="classSheet">
     <h1>Available classes</h1>
-    <div id="nav">
         <ul>
             <th> scope="col">Class ID</th>
                 <th> scope="col">Level</th>
@@ -68,9 +67,29 @@
                 {% endfor %}
             </table>
         </ul>
-    </div>
 </div>
 
+<div class="infoSheet" id="sessionSheet">
+    <h1>Available classes</h1>
+        <ul>
+            <th> scope="col">Class ID</th>
+                <th> scope="col">Level</th>
+                <th> scope="col">Title</th>
+                <th> scope="col">Capacity</th>
+                <th> scope="col">Room</th>
+                <th> scope="col">Teacher</th>
+                <th> scope="col">Cost</th>
+            <table class="queryTable">
+                {% for row in sdata %}
+                <tr>
+                    {% for d in row %}
+                    <td>{{ d }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </ul>
+</div>
 </body>
 
 </html>
