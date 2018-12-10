@@ -545,14 +545,10 @@ class handleStaffNewUser(Resource):
 class showClasses(Resource):
     def get(self):
         try:
-
             query = "SELECT * from `databasegroupproject`.`classes`"
             cursor = conn.cursor()
             cursor.execute(query)
             data = cursor.fetchall()
-            print(data)
-
-            conn.close()
 
             return make_response(render_template("classes.html", data=data))
 
@@ -637,16 +633,11 @@ class handleCreateSession(Resource):
 class showSessions(Resource):
     def get(self):
         try:
-
             query = "SELECT * from `databasegroupproject`.`session`"
             cursor = conn.cursor()
             cursor.execute(query)
             data = cursor.fetchall()
-
-            conn.close()
-
             return make_response(render_template("classes.html", data=data))
-
         except Exception as e:
             return (str(e))
         headers = {'Content-Type': 'text/html'}
