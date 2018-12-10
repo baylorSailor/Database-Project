@@ -522,9 +522,20 @@ class handleCreateClass(Resource):
         return make_response(render_template('success.html'), 200, headers)
 
 class staffIndex(Resource):
+    @requires_roles('admin')
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('staffIndex.html'), 200, headers)
+
+class createSession(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('createSession.html'), 200, headers)
+
+class handleCreateSession(Resource):
+    def post(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('success.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
@@ -554,6 +565,8 @@ api.add_resource(showClasses, '/showClasses')
 api.add_resource(createClass, '/createClass')
 api.add_resource(handleCreateClass, '/handleCreateClass')
 api.add_resource(staffIndex, '/staffIndex')
+api.add_resource(createSession, '/createSession')
+api.add_resource(handleCreateSession, '/handleCreateSession')
 #this will finally run our server once all other aspects of it hav ebeen created.
 
 

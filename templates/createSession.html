@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="../static/styles.css" type="text/css" rel="stylesheet"/>
+    <title>Staff Sign-in</title>
+</head>
+<header class="UYPHeader">
+    <h1 >
+        University for Young People
+    </h1>
+</header>
+<nav class="topnav">
+  <a href="\">Home</a>
+    <a href="\login">login</a>
+    <a href="\logout">logout</a>
+    <a  href="\apply">apply</a>
+
+</nav>
+<body>
+<div class="infoSheet">
+    <h1>
+        Create New Class
+    </h1>
+    <form action="http://127.0.0.1:5000/handleCreateSession" method="post" id="applicationForm" name="studentApp">
+
+        <p>startDate:
+            <input type="date" name="startDate"/>
+        </p>
+
+        <p>endDate:
+            <input type="date" name="endDate"/>
+        </p>
+
+        <p>session start time:
+            <input type="time" name="startTime"/>
+        </p>
+
+        <p>session end time:
+            <input type="time" name="endTime"/>
+        </p>
+
+
+
+        <input type="submit" name="submit" value="submit"/>
+    </form>
+</div>
+</body>
+</html>
