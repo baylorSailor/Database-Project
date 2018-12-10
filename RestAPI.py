@@ -324,15 +324,36 @@ class StudentRegister(Resource):
         schooltype = request.form["schoolType"]
         district = request.form["District"]
         schoolname = request.form["HighSchool"]
+        expectedSchool = request.form["expected"]
+        gtprogram = request.form["gt"]
+        grade = request.form["grade"]
+
         email = request.form["Email"]
         phone = request.form["Phone"]
         siblingusername = request.form["SiblingUsername"]
+        parentonename = request.form["parent1name"]
+        parentoneaddress = request.form["parent1address"]
+        parentoneemail = request.form["parent1email"]
+        parentoneworkphone = request.form["parent1wphone"]
+        parentonecellphone = request.form["parent1phone"]
+        parentonehomephone = request.form["parent1hphone"]
+        parenttwoname = request.form["parent2name"]
+        parenttwoaddress = request.form["parent2address"]
+        parenttwoemail = request.form["parent2email"]
+        parenttwoworkphone = request.form["parent2wphone"]
+        parenttwocellphone = request.form["parent2phone"]
+        parenttwohomephone = request.form["parent2hphone"]
 
         query = "INSERT INTO `databasegroupproject`.`applications` values (\'%s\', \'%s\', \'%s\', \'%s\',\'%s\'," \
-                "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')"
+                "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\'," \
+                "\'%s\', \'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\', \'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')"
         values = (first, last, middle, suffix, preffered, address, city, state, zipcode, birth, gender, race, email,
-                  phone, schooltype, district, schoolname, siblingusername)
+                  phone, schooltype, district, schoolname, expectedSchool, gtprogram, grade, siblingusername,
+                  parentonename, parentoneaddress,
+                  parentoneemail, parentoneworkphone, parentonecellphone, parentonehomephone, parenttwoname,
+                  parenttwoaddress, parenttwoemail, parenttwoworkphone, parenttwocellphone, parenttwohomephone)
         query = query % values
+        print(query)
         cursor.execute(query)
         conn.commit()
         headers = {'Content-Type': 'text/html'}
@@ -528,7 +549,7 @@ class handleStaffNewUser(Resource):
                 for column in row:
                     if column == username:
                         return make_response(render_template('staffCreateUser.html'), 200, headers)
-            query = "Insert into `databasegroupproject`.`admin` Values (%s,%s)"
+            query = "Insert into `databasegroupproject`.`admin` values (%s,%s)"
             values = (username, password)
             cursor = conn.cursor()
             cursor.execute(query, values)
@@ -640,7 +661,10 @@ class handleCreateSession(Resource):
                     "\'%s\',"\
                     " \'%s\', \'%s\')"
             query = query % values
-            cursor.execute(query)
+            try:
+                cursor.execute(query)
+            except Exception as e:
+                return (str(e))
             conn.commit()
             return make_response(render_template('success.html'), 200, headers)
         return make_response(render_template('createSession.html'), 200, headers)
@@ -800,7 +824,6 @@ class handleNewStudent(Resource):
         password = request.form["password"]
         address = request.form["address"]
         if request.form["accept"]:
-            print("Hey")
             cursor = conn.cursor()
             values = (firstName, lastName, address)
             query = "select * from `databasegroupproject`.`applications` where first=\'%s\' and last=\'%s\' and " \

@@ -17,7 +17,6 @@
     <a href="\logout">logout</a>
     <a  class ="active" href="\apply">apply</a>
     <a href="\studentRegister">register for classes</a>
-    <a href="\Info">my info</a>
 
 </nav>
 <body>
@@ -160,12 +159,23 @@
         </div>
 	<div id="gt" style="display: none;">
 	<p>Gt program?
-		<select name="schoolType">
+		<select name="gt">
                 	<option value="yes">yes</option>
                  	<option value="no">no</option>
             	</select>
 	</p>
 	</div>
+	
+	<p>Expected high school:
+		<input type="text" name="expected" size="25" maxlength="25"/>
+	</p>
+	<p>Grade for upcomming fall:
+		<select name="grade">
+                	<option value="lower">4th-5th</option>
+                 	<option value="middle">6th-8th</option>
+			<option value="upper">9th-12th</option>
+            	</select>
+	</p>
         <p>Email:
             <input type="text" name="Email" size="25" maxlength="25" required/>
         </p>
@@ -188,6 +198,7 @@
             <input type="text" id = "siblingUsername" name="SiblingUsername" size="15" maxlength="25"/>
         </p>
         </div>
+
 	<p>Parents name:
 		<input type="text" id="parent1name" name="parent1name" size="15" maxlength="25"/>
 	</p>
@@ -202,6 +213,9 @@
 	</p>
 	<p>Parents CellPhone:
 		<input type="text" id="parent1phone" name="parent1phone" size="15" maxlength="25"/>
+	</p>
+	<p>Parents HomePhone:
+		<input type="text" id="parent1hphone" name="parent1hphone" size="15" maxlength="25"/>
 	</p>
 
 	<p>Second Parents name:
@@ -218,6 +232,9 @@
 	</p>
 	<p>Second Parents CellPhone:
 		<input type="text" id="parent2phone" name="parent2phone" size="15" maxlength="25"/>
+	</p>
+	<p>Second Parents HomePhone:
+		<input type="text" id="parent2hphone" name="parent2hphone" size="15" maxlength="25"/>
 	</p>
         <input type="submit" name="submit" value="submit"/>
 
@@ -247,6 +264,7 @@
     function schoolCheck(that) {
         if (that.value =="private") {
             document.getElementById("schoolName").style.display = "block";
+	    document.getElementById("district").style.display = "none";
             document.getElementById("district").value='';
 	    document.getElementById("gt").style.display = "none";
 	    document.getElementById("gt").value = "";
