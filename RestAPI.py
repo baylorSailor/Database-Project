@@ -177,12 +177,10 @@ def do_login():
             session['logged_in'] = True
             session['username'] = username
             session['role'] = 'student'
-            flash('Welcome back, '+username)
         elif password == tempPass2:
             session['logged_in'] = True
             session['username'] = username
             session['role'] = 'admin'
-            flash('Welcome back administrator' + username)
         else:
             flash('wrong password!', 'danger')
     else:
@@ -221,7 +219,7 @@ def requires_roles(*roles):
                 return f(*args, **kwargs)
             else:
                 flash('not allowed', 'danger')
-                return redirect(url_for('HelloWorld'))
+                return redirect(url_for('helloworld'))
         return wrapped
     return wrapper
 # this class is a simple helloWorld response to a HTTP GET request or an echo response to a POST request.
@@ -329,7 +327,8 @@ class StudentRegister(Resource):
         expectedSchool = request.form["expected"]
         gtprogram = request.form["gt"]
         grade = request.form["grade"]
-
+        graddate = request.form["graddate"]
+        print(graddate)
         email = request.form["Email"]
         phone = request.form["Phone"]
         siblingusername = request.form["SiblingUsername"]
@@ -532,51 +531,29 @@ class handleStaffNewUser(Resource):
         headers = {'Content-Type': 'text/html'}
         username = request.form["username"]
         password = request.form["password"]
-        roll = request.form["userRole"]
 
-        if roll == "Admin":
-            query = "select username from `databasegroupproject`.`admin` where username=%s"
-            cursor = conn.cursor()
-            cursor.execute(query, username)
-            result = cursor.fetchall()
-            for row in result:
-                for column in row:
-                    if column == username:
-                        return make_response(render_template('staffCreateUser.html'), 200, headers)
-            query = "select username from `databasegroupproject`.`user` where username=%s"
-            cursor = conn.cursor()
-            cursor.execute(query, username)
-            result = cursor.fetchall()
-            for row in result:
-                for column in row:
-                    if column == username:
-                        return make_response(render_template('staffCreateUser.html'), 200, headers)
-            query = "Insert into `databasegroupproject`.`admin` values (%s,%s)"
-            values = (username, password)
-            cursor = conn.cursor()
-            cursor.execute(query, values)
-            conn.commit()
-        else:
-            query = "select username from `databasegroupproject`.`admin` where username=%s"
-            cursor = conn.cursor()
-            cursor.execute(query, username)
-            result = cursor.fetchall()
-            for row in result:
-                for column in row:
-                    if column == username:
-                        return make_response(render_template('staffCreateUser.html'), 200, headers)
-            query = "select username from `databasegroupproject`.`user` where username=%s"
-            cursor = conn.cursor()
-            cursor.execute(query, username)
-            result = cursor.fetchall()
-            for row in result:
-                for column in row:
-                    if column == username:
-                        return make_response(render_template('staffCreateUser.html'), 200, headers)
-            query = "Insert into `databasegroupproject`.`user` (username, password) Values (%s,%s)"
-            values = (username, password)
-            cursor.execute(query, values)
-            conn.commit()
+        query = "select username from `databasegroupproject`.`admin` where username=%s"
+        cursor = conn.cursor()
+        cursor.execute(query, username)
+        result = cursor.fetchall()
+        for row in result:
+            for column in row:
+                if column == username:
+                    return make_response(render_template('staffCreateUser.html'), 200, headers)
+        query = "select username from `databasegroupproject`.`user` where username=%s"
+        cursor = conn.cursor()
+        cursor.execute(query, username)
+        result = cursor.fetchall()
+        for row in result:
+            for column in row:
+                if column == username:
+                    return make_response(render_template('staffCreateUser.html'), 200, headers)
+        query = "Insert into `databasegroupproject`.`admin` values (%s,%s)"
+        values = (username, password)
+        cursor = conn.cursor()
+        cursor.execute(query, values)
+        conn.commit()
+
         return make_response(render_template('success.html'), 200, headers)
 
 class showClasses(Resource):
@@ -778,7 +755,9 @@ class showStudents(Resource):
     @requires_roles('admin')
     def get(self):
         try:
-            query = "SELECT * from `databasegroupproject`.`applications`"
+            query = "SELECT first, last, middle, suffix, preffered, address, city, state, zip, " \
+                    "birth, gender, race, email, phone, schooltype, district, schoolname, siblingusername" \
+                    " from `databasegroupproject`.`applications`"
             cursor = conn.cursor()
             cursor.execute(query)
             data = cursor.fetchall()
@@ -827,7 +806,8 @@ class handleNewStudent(Resource):
         username = request.form["username"]
         password = request.form["password"]
         address = request.form["address"]
-        if request.form["accept"]:
+        value = request.form["accept"]
+        if value == "accept":
             cursor = conn.cursor()
             values = (firstName, lastName, address)
             query = "select * from `databasegroupproject`.`applications` where first=\'%s\' and last=\'%s\' and " \
