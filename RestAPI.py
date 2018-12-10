@@ -771,19 +771,20 @@ class acceptStudents(Resource):
 class displayInfo(Resource):
     def get(self):
         try:
-            query = "SELECT * from `databasegroupproject`.`session`"
+            query = "SELECT firstname, lastname, middleinitial, suffix, nickname, address, city, state, zip, " \
+                    "birthdate, gender, race, email, phonenumber from `databasegroupproject`.`student`"
             cursor = conn.cursor()
             cursor.execute(query)
             data = cursor.fetchall()
 
-            query2 = "SELECT * from `databasegroupproject`.`classes`"
+            query2 = "SELECT level, name, room, instructor, cost from `databasegroupproject`.`classes`"
             cursor.execute(query2)
             sdata = cursor.fetchall()
 
-            query3 = "SELECT * from `databasegroupproject`.`classes`"
+            query3 = "SELECT startdate, enddate, starttime, endtime from `databasegroupproject`.`session`"
             cursor.execute(query3)
             stdata = cursor.fetchall()
-            return make_response(render_template("info.html", data=data, sdata=sdata, stdata=stdata))
+            return make_response(render_template("info.html", data=data, sdata=stdata, stdata=sdata))
         except Exception as e:
             return str(e)
         headers = {'Content-Type': 'text/html'}
