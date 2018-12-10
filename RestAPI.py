@@ -15,10 +15,9 @@
 # The flask_restful imports help with streamlining the api creation process so it is much more managable
 #   trying to code this without using the Flask_restful tools could be a problem with medium/large programs
 # The JSON import is what will handle converting the mysql tuple data into an easier to handle JSON format.
-from flask import Flask, flash,redirect,session,abort, request, render_template, make_response, url_for
+from flask import Flask, flash, redirect, session, abort, request, render_template, make_response, url_for
 from flask_restful import Resource, Api, reqparse
 from flaskext.mysql import MySQL
-from flask_user import login_required, user_manager, user_mixin, SQLAlchemyAdapter
 from functools import wraps
 
 import json
@@ -149,7 +148,6 @@ def do_login():
         for col in row:
             if col == username:
                 validUser = True
-    print(validUser)
     query = "select username from `databasegroupproject`.`admin`"
     cursor.execute(query)
     result = cursor.fetchall()
@@ -158,7 +156,6 @@ def do_login():
             if col == username:
                 validUser = True
 
-    print(validUser)
     if validUser:
         query = "select password from `databasegroupproject`.`user` where username=%s"
         cursor.execute(query, username)
@@ -217,7 +214,6 @@ def requires_roles(*roles):
     def wrapper(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
-            print(session)
             if not session.get('logged_in'):
                 return redirect(url_for('home'))
             elif session['role'] in roles:
@@ -598,12 +594,40 @@ class createSession(Resource):
 class handleCreateSession(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('success.html'), 200, headers)
+        print(request.form)
+        start = request.form["startDate"]
+        end = request.form["endDate"]
+        startTime = request.form["startTime"]
+        endTime = request.form["endTime"]
+
+        query = "select startdate, enddate, startTime, endTime from `databasegroupproject`.`session` where " \
+                "startdate=\'%s\' and " \
+                "enddate=\'%s\' and starttime=\'%s\' and endtime=\'%s\'"
+        values = (start, end, startTime, endTime)
+        cursor = conn.cursor()
+        query = query % values
+        print(query)
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        duplicate = True
+        for row in result:
+            duplicate = False
+        if duplicate:
+            query = "insert into `databasegroupproject`.`session` (startdate, enddate, starttime, endtime) values (\'%s\', " \
+                    "\'%s\',"\
+                    " \'%s\', \'%s\')"
+            query = query % values
+            cursor.execute(query)
+            conn.commit()
+            return make_response(render_template('success.html'), 200, headers)
+        return make_response(render_template('createSession.html'), 200, headers)
 
 class showSessions(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('sessions.html'), 200, headers)
+
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
