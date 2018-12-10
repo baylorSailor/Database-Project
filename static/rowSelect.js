@@ -1,9 +1,10 @@
 
 
-alert('hi');
 
 $("#queryTable tr").click(function(){
-   alert('');
+   $(this).addClass('selected').siblings().removeClass('selected');
+   var value=$(this).find('td:first').html();
+   alert(value);
 });
 
 $('.ok').on('click', function(e){
