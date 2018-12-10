@@ -210,7 +210,6 @@ def logout():
 
 
 def requires_roles(*roles):
-    print('checking role')
     def wrapper(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
