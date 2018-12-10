@@ -535,6 +535,7 @@ class createSession(Resource):
 class handleCreateSession(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
+        print(request.form)
         return make_response(render_template('success.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
