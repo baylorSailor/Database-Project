@@ -735,6 +735,7 @@ class acceptStudents(Resource):
     @requires_roles('admin')
     def post(self):
         headers = {'Content-Type': 'text/html'}
+        print(request.form)
         return make_response(render_template('success.html'), 200, headers)
 
 class displayInfo(Resource):
