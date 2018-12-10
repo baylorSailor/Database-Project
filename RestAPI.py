@@ -740,10 +740,12 @@ class handleStudentClassRegister(Resource):
         for row in result:
             for col in row:
                 userid = col
+        print(userid)
         query = "insert into `databasegroupproject`.`takes` values (\'%s\',\'%s\',\'%s\')"
         values = (userid, classid, sessionid)
         query = query % values
         cursor.execute(query)
+        conn.commit()
         return make_response(render_template('success.html'), 200, headers)
 
 class showStudents(Resource):

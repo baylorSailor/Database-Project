@@ -26,11 +26,7 @@
     </h1>
     <form action="http://127.0.0.1:5000/register/student" method="post" id="applicationForm" name="studentApp">
         <p>First name:
-<<<<<<< HEAD
             <input type="text" id="fName" name="First" size="15" maxlength="25" onchange="nameCheck(this);"/>
-=======
-            <input type="text" name="First" size="15" maxlength="25" required/>
->>>>>>> ab97c3407528872f6c71a594175354ebce81130f
         </p>
 
         <p>Last name:
@@ -161,7 +157,14 @@
             <input type="text" name="HighSchool" size="25" maxlength="25"/>
         </p>
         </div>
-
+	<div id="gt" style="display: none;">
+	<p>Gt program?
+		<select name="schoolType">
+                	<option value="yes">yes</option>
+                 	<option value="no">no</option>
+            	</select>
+	</p>
+	</div>
         <p>Email:
             <input type="text" name="Email" size="25" maxlength="25" required/>
         </p>
@@ -184,6 +187,37 @@
             <input type="text" id = "siblingUsername" name="SiblingUsername" size="15" maxlength="25"/>
         </p>
         </div>
+	<p>Parents name:
+		<input type="text" id="parent1name" name="parent1name" size="15" maxlength="25"/>
+	</p>
+	<p>Parents address:
+		<input type="text" id="parent1address" name="parent1address" size="15" maxlength="25"/>
+	</p>
+	<p>Parents email:
+		<input type="text" id="parent1email" name="parent1email" size="15" maxlength="25"/>
+	</p>
+	<p>Parents WorkPhone:
+		<input type="text" id="parent1wphone" name="parent1wphone" size="15" maxlength="25"/>
+	</p>
+	<p>Parents CellPhone:
+		<input type="text" id="parent1phone" name="parent1phone" size="15" maxlength="25"/>
+	</p>
+
+	<p>Second Parents name:
+		<input type="text" id="parent2name" name="parent2name" size="15" maxlength="25"/>
+	</p>
+	<p>Second Parents address:
+		<input type="text" id="parent2address" name="parent2address" size="15" maxlength="25"/>
+	</p>
+	<p>Second Parents email:
+		<input type="text" id="parent2email" name="parent2email" size="15" maxlength="25"/>
+	</p>
+	<p>Second Parents WorkPhone:
+		<input type="text" id="parent2wphone" name="parent2wphone" size="15" maxlength="25"/>
+	</p>
+	<p>Second Parents CellPhone:
+		<input type="text" id="parent2phone" name="parent2phone" size="15" maxlength="25"/>
+	</p>
         <input type="submit" name="submit" value="submit"/>
 
     </form>
@@ -213,16 +247,21 @@
         if (that.value =="private") {
             document.getElementById("schoolName").style.display = "block";
             document.getElementById("district").value='';
+	    document.getElementById("gt").style.display = "none";
+	    document.getElementById("gt").value = "";
         }
         if(that.value =="home"){
             document.getElementById("district").style.display = "none";
             document.getElementById("district").value ="";
             document.getElementById("schoolName").style.display = "none";
             document.getElementById("schoolName").value ="";
+	    document.getElementById("gt").style.display = "none";
+	    document.getElementById("gt").value = "";
         }
         if (that.value == "public") {
             document.getElementById("district").style.display = "block";
             document.getElementById("schoolName").style.display = "block";
+	    document.getElementById("gt").style.display = "block";
         }
     }
 
