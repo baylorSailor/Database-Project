@@ -715,6 +715,27 @@ class handleStudentClassRegister(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('success.html'), 200, headers)
+
+class showStudents(Resource):
+    @requires_roles('admin')
+    def get(self):
+        try:
+            query = "SELECT * from `databasegroupproject`.`classes`"
+            cursor = conn.cursor()
+            cursor.execute(query)
+            data = cursor.fetchall()
+
+            return make_response(render_template("showApplicants.html", data=data))
+        except Exception as e:
+            return str(e)
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('addClassToSession.html'), 200, headers)
+
+class acceptStudents(Resource):
+    @requires_roles('admin')
+    def post(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('success.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
