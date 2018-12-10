@@ -735,7 +735,6 @@ class acceptStudents(Resource):
     @requires_roles('admin')
     def post(self):
         headers = {'Content-Type': 'text/html'}
-        print(request.form)
         return make_response(render_template('success.html'), 200, headers)
 
 class displayInfo(Resource):
@@ -762,6 +761,20 @@ class displayInfo(Resource):
 class handleNewStudent(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
+        print(request.form)
+        firstName = request.form["firstName"]
+        lastName = request.form["lastName"]
+        address = request.form["address"]
+        if not request.form["accept"]:
+            query = "delete from `databasegroupproject`.`applications` where first=\'%s\' and last=\'%s\' and " \
+                    "address=\'%s\'"
+            cursor = conn.cursor()
+            values = (firstName, lastName, address)
+            query = query % values
+            cursor.execute(query)
+        else:
+            query = "delete from `databasegroupproject`.`applications` where first=\'%s\' and last=\'%s\' and " \
+                    "address=\'%s\'"
         return make_response(render_template('success.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
