@@ -651,12 +651,12 @@ class showClassSessions(Resource):
             cursor.execute(query)
             data = cursor.fetchall()
 
-            query2 = "SELECT * from `databasegroupproject`.`session`"
+            query2 = "SELECT * from `databasegroupproject`.`classes`"
             cursor.execute(query2)
             sdata = cursor.fetchall()
-            return make_response(render_template("sessions.html", data=data,sdata=sdata))
+            return make_response(render_template("addClassToSession.html", data=data, sdata=sdata))
         except Exception as e:
-            return (str(e))
+            return str(e)
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('addClassToSession.html'), 200, headers)
 
