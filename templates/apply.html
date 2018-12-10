@@ -26,15 +26,15 @@
     </h1>
     <form action="http://127.0.0.1:5000/register/student" method="post" id="applicationForm" name="studentApp">
         <p>First name:
-            <input type="text" id="fName" name="First" size="15" maxlength="25" onchange="nameCheck(this);"/>
+            <input type="text" id="fName" name="First" size="15" maxlength="25" onchange="fNameCheck(this);" required/>
         </p>
 
         <p>Last name:
-            <input type="text" name="Last" size="15" maxlength="25" required/>
+            <input type="text" id="lName" name="Last" size="15" maxlength="25" onchange="lNameCheck(this)" required/>
         </p>
 
         <p>Middle Initial:
-            <input type="text" name="Middle" size="2" maxlength="1"/>
+            <input type="text" name="Middle" size="1" maxlength="1"/>
         </p>
 
         <p>Suffix:
@@ -242,9 +242,8 @@
 </div>
 </body>
 <script>
-    function nameCheck(that) {
+    function fNameCheck(that) {
         var patt = new RegExp("^[a-zA-Z]*$");
-        var elMsg = document.getElementById('fName');
         if(!patt.test(that.value)) {
             alert("Name must only contain alphabetical values");
             document.getElementById('fName').style.background = '#e35152';
@@ -256,6 +255,24 @@
 
         if((document.studentApp.First.value == "") && (document.studentApp.Last.value == "")){
             document.getElementById("First").innerHTML = "First name or Second name should not be empty";
+            registerationform.fnametxt.focus();
+            return(false);
+        }
+    }
+
+    function lNameCheck(that) {
+        var patt = new RegExp("^[a-zA-Z]*$");
+        if(!patt.test(that.value)) {
+            alert("Name must only contain alphabetical values");
+            document.getElementById('lName').style.background = '#e35152';
+            return true;
+            // elMsg.innerHTML = "Name must only contain alphabetical values";
+        }else{
+            document.getElementById('lName').style.background = '#ccffcc';
+        }
+
+        if((document.studentApp.First.value == "") && (document.studentApp.Last.value == "")){
+            document.getElementById("Last").innerHTML = "First name or Second name should not be empty";
             registerationform.fnametxt.focus();
             return(false);
         }

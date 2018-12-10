@@ -19,9 +19,11 @@ from flask import Flask, flash, redirect, session, abort, request, render_templa
 from flask_restful import Resource, Api, reqparse
 from flaskext.mysql import MySQL
 from functools import wraps
+from io import StringIO
 
 import json
 import os
+import csv
 
 def query_mysql(query,user,password,host,port,database):
     cnx = mysql.connector.connect(user=user, password=password,
@@ -911,11 +913,32 @@ class staffDisplayInfo(Resource):
             return str(e)
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('index.html'), 200, headers)
+class exportStudentToCSV(Resource):
+    @requires_roles ('admin')
+    def get(self, load_file_id):
+        try:
+            username = request.form["username"]
+            query = "SELECT * from `databasegroupproject`.`user` where username=%s"
+            cursor = conn.cursor()
+            cursor.execute(query, username)
+            si = StringIO.StringIO()
+            cw = csv.writer(si)
+            rows = cursor.fetchall()
+            cw.writerow([i[0] for i in cursor.description])
+            cw.writerows(rows)
+            response = make_response(si.getvalue())
+            response.headers['Content-Disposition'] = 'attachment; filename=report.csv'
+            response.headers["Content-type"] = "text/csv"
+            return response
+
+        except Exception as e:
+            return str(e)
+
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
 
-# when you run thi program, the consol should show what address it is runnin off of.
+# when you run this program, the console should show what address it is runnin off of.
 # add the following paths to the address to access it's different functions.
 # eg:  http://127.0.0.1:5000/testSQL
 #      http://127.0.0.1:5000/
@@ -951,6 +974,7 @@ api.add_resource(showStudents, '/showStudents')
 api.add_resource(displayInfo, '/Info')
 api.add_resource(handleNewStudent, '/handleNewStudent')
 api.add_resource(staffDisplayInfo, '/staffDisplayInfo')
+api.add_resource(exportStudentToCSV, '/exportStudentToCSV')
 #this will finally run our server once all other aspects of it hav ebeen created.
 
 
