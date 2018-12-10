@@ -318,9 +318,9 @@ class StudentRegister(Resource):
         zipcode = request.form["Zip"]
         birth = request.form["Birthdate"]
         if request.form["Gender"] == "M":
-            gender = 0
+            gender = "Male"
         else:
-            gender = 1
+            gender = "Female"
         race = request.form["Race"]
         schooltype = request.form["schoolType"]
         district = request.form["District"]
@@ -332,7 +332,7 @@ class StudentRegister(Resource):
 
         query = "INSERT INTO `databasegroupproject`.`applications` values (\'%s\', \'%s\', \'%s\', \'%s\',\'%s\'," \
                 "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')"
-        values = (first, last, middle, suffix, preffered, address, city, state, zipcode, birth, str(gender), race, email,
+        values = (first, last, middle, suffix, preffered, address, city, state, zipcode, birth, gender, race, email,
                   phone, schooltype, district, schoolname, graddate, siblingusername)
         query = query % values
         cursor.execute(query)
