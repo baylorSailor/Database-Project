@@ -667,7 +667,7 @@ class handleClassSession(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('success.html'), 200, headers)
 
-class studentRegister(Resource):
+class studentClassRegister(Resource):
     def get(self):
         try:
             query = "SELECT * from `databasegroupproject`.`session`"
@@ -684,7 +684,7 @@ class studentRegister(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('studentRegister.html'), 200, headers)
 
-class handleStudentRegister(Resource):
+class handleStudentClassRegister(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('success.html'), 200, headers)
@@ -722,8 +722,8 @@ api.add_resource(handleCreateSession, '/handleCreateSession')
 api.add_resource(showSessions, '/showSessions')
 api.add_resource(showClassSessions, '/showClassSessions')
 api.add_resource(handleClassSession, '/handleClassSession')
-api.add_resource(studentRegister, '/studentRegister')
-api.add_resource(handleStudentRegister, '/handleStudentRegister')
+api.add_resource(studentClassRegister, '/studentRegister')
+api.add_resource(handleStudentClassRegister, '/handleStudentRegister')
 
 #this will finally run our server once all other aspects of it hav ebeen created.
 
