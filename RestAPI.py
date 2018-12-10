@@ -544,9 +544,22 @@ class handleStaffNewUser(Resource):
 
 class showClasses(Resource):
     def get(self):
-        f = open("/templates/classes.html", "w+")
-        # put these parameters in sql_html function: sqlFormula,user,password,host,port,database
-        f.write(sql_html())
+        try:
+
+            c = conn
+            query = "SELECT * from submissions"
+            c.execute(query)
+
+            data = c.fetchall()
+
+            conn.close()
+
+            return data
+
+            return render_template("classes.html", data=data)
+
+        except Exception as e:
+            return (str(e))
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('classes.html'), 200, headers)
 

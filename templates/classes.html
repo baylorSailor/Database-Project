@@ -3,11 +3,11 @@
 
 <head>
     <title>UYP Home</title>
-    <link href="../static/styles.css" type="text/css" rel="stylesheet" />
+    <link href="../static/styles.css" type="text/css" rel="stylesheet"/>
 </head>
 
 <header class="UYPHeader">
-    <h1 >
+    <h1>
         University for Young People
     </h1>
 </header>
@@ -15,18 +15,26 @@
     <a class="active" href="\">Home</a>
     <a href="\login">login</a>
     <a href="\logout">logout</a>
-     <a  href="\apply">apply</a>
+    <a href="\apply">apply</a>
 
 </nav>
 <body>
-    <div class="infoSheet" id = "welcomeSheet">
+<div class="infoSheet" id="welcomeSheet">
     <h1>Available classes</h1>
     <div id="nav">
         <ul>
-            <p>classes will go here</p>
+            <table border="1" cellpadding="5" cellspacing="5">
+                {% for row in data %}
+                <tr>
+                    {% for d in row %}
+                    <td>{{ d }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
         </ul>
     </div>
-    </div>
+</div>
 
 </body>
 
