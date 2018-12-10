@@ -546,11 +546,21 @@ class showClasses(Resource):
     def get(self):
         try:
 
-            query = "SELECT * from `databasegroupproject`.`sessions`"
+            query = "SELECT * from `databasegroupproject`.`classes`"
             cursor = conn.cursor()
             cursor.execute(query)
 
-            data = cursor.fetchall()
+            classId = 'Class id'
+            level = 'Level'
+            title = 'Title'
+            capacity = 'Capacity'
+            room = 'Room'
+            teacher = 'Teacher'
+            cost = 'Cost'
+            data = {classId, level, title, capacity, room, teacher, cost}
+            print(data)
+            data.add(cursor.fetchall())
+            print(data)
 
             conn.close()
 
