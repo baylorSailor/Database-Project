@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>UYP Home</title>
+    <link href="../static/styles.css" type="text/css" rel="stylesheet"/>
+    <style>
+        .queryTable {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .queryTable td, .queryTable th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .queryTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .queryTable tr:hover {
+            background-color: #ddd;
+        }
+
+        .queryTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+
+<header class="UYPHeader">
+    <h1>
+        University for Young People
+    </h1>
+</header>
+<nav class="topnav">
+    <a class="active" href="\">Home</a>
+    <a href="\login">login</a>
+    <a href="\logout">logout</a>
+    <a href="\apply">apply</a>
+    <a href="\studentRegister">register for classes</a>
+</nav>
+<body>
+
+<div class="infoSheet" id="studentSheet" style="width: 90%">
+    <h1>StudentInfo</h1>
+    <div id="nav">
+        <ul>
+            <table class="queryTable" id="queryTable">
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">M.I</th>
+                <th scope="col">Suffix</th>
+                <th scope="col">Nickname</th>
+                <th scope="col">Sddress</th>
+                <th scope="col">City</th>
+                <th scope="col">State</th>
+                <th scope="col">Zip</th>
+                <th scope="col">Birth date</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Race</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">School Type</th>
+                <th scope="col">District</th>
+                <th scope="col">School Name</th>
+                <th scope="col">Grad. Date</th>
+                <th scope="col">Sibling Username</th>
+                {% for row in data %}
+                <tr onclick="getID(this)">
+                    {% for d in row %}
+                    <td>{{ d }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+            <input type="button" name="OK" class="ok" value="OK"/>
+        </ul>
+    </div>
+</div>
+<hr>
+<div class="infoSheet" id="classSheet">
+    <h1>Registered classes</h1>
+        <ul>
+            <table class="queryTable">
+                <th scope="col">Level</th>
+                <th scope="col">Title</th>
+                <th scope="col">Room</th>
+                <th scope="col">Teacher</th>
+                <th scope="col">Cost</th>
+                {% for row in stdata %}
+                <tr>
+                    {% for d in row %}
+                    <td>{{ d }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </ul>
+</div>
+<hr>
+<div class="infoSheet" id="sessionSheet">
+    <h1>Registered Sessions</h1>
+        <ul>
+            <table class="queryTable">
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                {% for row in sdata %}
+                <tr>
+                    {% for d in row %}
+                    <td>{{ d }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </ul>
+</div>
+
+</body>
+
+</html>

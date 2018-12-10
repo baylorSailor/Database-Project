@@ -15,7 +15,7 @@
     <a href="\login">login</a>
     <a href="\logout">logout</a>
     <a  href="\apply">apply</a>
-
+    <a href="\studentRegister">register for classes</a>
 </nav>
 <body>
 <div class="infoSheet">
@@ -32,22 +32,22 @@
             </select>
         </p>
         <p>class name:
-            <input type="text" name="className" size="20" maxlength="20"/>
+            <input type="text" name="className" size="20" maxlength="20" required/>
         </p>
 
         <p>capacity:
-            <input type="text" name="capacity" size="4" maxlength="4"/>
+            <input type="text" name="capacity" size="4" maxlength="4" required/>
         </p>
 
         <p>room:
-            <input type="text" name = "room"/>
+            <input type="text" name = "room" required/>
         </p>
 
          <p>instructor:
-            <input type="text" name = "instructor"/>
+            <input type="text" name = "instructor" required/>
         </p>
         <p> cost:
-            <input type="number" min="1" step="any" name="cost" />
+            <input type="number" min="1" step="any" name="cost" required/>
         </p>
 
         <input type="submit" name="submit" value="submit"/>

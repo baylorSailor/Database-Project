@@ -15,7 +15,8 @@
   <a href="\">Home</a>
     <a href="\login">login</a>
     <a href="\logout">logout</a>
-      <a  class ="active" href="\apply">apply</a>
+    <a  class ="active" href="\apply">apply</a>
+    <a href="\studentRegister">register for classes</a>
 
 </nav>
 <body>
@@ -25,11 +26,15 @@
     </h1>
     <form action="http://127.0.0.1:5000/register/student" method="post" id="applicationForm" name="studentApp">
         <p>First name:
+<<<<<<< HEAD
             <input type="text" id="fName" name="First" size="15" maxlength="25" onchange="nameCheck(this);"/>
+=======
+            <input type="text" name="First" size="15" maxlength="25" required/>
+>>>>>>> ab97c3407528872f6c71a594175354ebce81130f
         </p>
 
         <p>Last name:
-            <input type="text" name="Last" size="15" maxlength="25"/>
+            <input type="text" name="Last" size="15" maxlength="25" required/>
         </p>
 
         <p>Middle Initial:
@@ -47,15 +52,15 @@
         <hr/>
 
         <p>Address:
-            <input type="text" name="Address" size="25" maxlength="100"/>
+            <input type="text" name="Address" size="25" maxlength="100" required/>
         </p>
 
         <p>City:
-            <input type="text" name="City" size="15" maxlength="25"/>
+            <input type="text" name="City" size="15" maxlength="25" required/>
         </p>
 
         <p>State:
-            <select name="State">
+            <select name="State" required>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
                 <option value="AZ">Arizona</option>
@@ -111,13 +116,13 @@
         </p>
 
         <p>Zip:
-            <input type="text" name="Zip" size="5" maxlength="5"/>
+            <input type="text" name="Zip" size="5" maxlength="5" required/>
         </p>
 
         <hr/>
 
         <p>Birthdate:
-            <input type="date" name="Birthdate" size="10" maxlength="11"/>
+            <input type="date" name="Birthdate" size="10" maxlength="11" required/>
         </p>
 
         <p>Gender:
@@ -158,11 +163,11 @@
         </div>
 
         <p>Expected Graduation Date:
-            <input type="date" name="GradDate" size="10" maxlength="11"/>
+            <input type="date" name="GradDate" size="10" maxlength="11" required/>
         </p>
 
         <p>Email:
-            <input type="text" name="Email" size="25" maxlength="25"/>
+            <input type="text" name="Email" size="25" maxlength="25" required/>
         </p>
 
         <p>Student's Phone:
