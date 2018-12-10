@@ -536,7 +536,33 @@ class handleCreateSession(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
         print(request.form)
-        return make_response(render_template('success.html'), 200, headers)
+        start = request.form["startDate"]
+        end = request.form["endDate"]
+        startTime = request.form["startTime"]
+        endTime = request.form["endTime"]
+
+        query = "select startdate, enddate, startTime, endTime from `databasegroupproject`.`session` where " \
+                "startdate=\'%s\' and " \
+                "enddate=\'%s\' and starttime=\'%s\' and endtime=\'%s\'"
+        values = (start, end, startTime, endTime)
+        cursor = conn.cursor()
+        query = query % values
+        print(query)
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        duplicate = True
+        for row in result:
+            duplicate = False
+        if duplicate:
+            query = "insert into `databasegroupproject`.`session` (startdate, enddate, starttime, endtime) values (\'%s\', " \
+                    "\'%s\',"\
+                    " \'%s\', \'%s\')"
+            query = query % values
+            cursor.execute(query)
+            conn.commit()
+            return make_response(render_template('success.html'), 200, headers)
+        return make_response(render_template('createSession.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
