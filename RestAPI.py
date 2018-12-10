@@ -720,7 +720,7 @@ class showStudents(Resource):
     @requires_roles('admin')
     def get(self):
         try:
-            query = "SELECT * from `databasegroupproject`.`classes`"
+            query = "SELECT * from `databasegroupproject`.`applications`"
             cursor = conn.cursor()
             cursor.execute(query)
             data = cursor.fetchall()
