@@ -40,17 +40,19 @@
     </h1>
 </header>
 <nav class="topnav">
+    <a href="\">home</a>
     <a href="\login">login</a>
     <a href="\logout">logout</a>
     <a href="\apply">apply</a>
-    <a class = "active" href="\studentClassRegister">register for classes</a>
+    <a class = "active" href="\studentRegister">register for classes</a>
 
 </nav>
 <body>
-<div class="infoSheet" id="classSheet" style = "left: 100px">
+<div class="infoSheet" id="classSheet" style="left: 100px">
     <h1>Available classes</h1>
         <ul>
             <table class="queryTable">
+		<th scope="col">Section ID</th>
                 <th scope="col">Class ID</th>
                 <th scope="col">Level</th>
                 <th scope="col">Title</th>
@@ -59,6 +61,8 @@
                 <th scope="col">Room</th>
                 <th scope="col">Teacher</th>
                 <th scope="col">Cost</th>
+		<th scope="col">Week</th>
+		<th scope="col">Time</th>
                 {% for row in data %}
                 <tr>
                     {% for d in row %}
@@ -74,12 +78,15 @@
 <div class="infoSheet" id="submissionSheet">
 <form action="http://127.0.0.1:5000/handleStudentRegister" method="post" name="studentForm">
         <p>Class ID:
-            <input type="class" name="classID"/>
+            <input type="number" name="classID"/>
         </p>
 
         <p>Session ID:
             <input type="number" name="sessionID"/>
         </p>
+	<p>Student Username:
+	    <input type="text" name="username"/>
+	</p>
         <input type="submit" name="submit" value="submit"/>
     </form>
 </div>

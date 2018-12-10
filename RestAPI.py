@@ -325,15 +325,14 @@ class StudentRegister(Resource):
         schooltype = request.form["schoolType"]
         district = request.form["District"]
         schoolname = request.form["HighSchool"]
-        graddate = request.form["GradDate"]
         email = request.form["Email"]
         phone = request.form["Phone"]
         siblingusername = request.form["SiblingUsername"]
 
         query = "INSERT INTO `databasegroupproject`.`applications` values (\'%s\', \'%s\', \'%s\', \'%s\',\'%s\'," \
-                "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')"
+                "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')"
         values = (first, last, middle, suffix, preffered, address, city, state, zipcode, birth, gender, race, email,
-                  phone, schooltype, district, schoolname, graddate, siblingusername)
+                  phone, schooltype, district, schoolname, siblingusername)
         query = query % values
         cursor.execute(query)
         conn.commit()
@@ -522,12 +521,28 @@ class handleStaffNewUser(Resource):
                 for column in row:
                     if column == username:
                         return make_response(render_template('staffCreateUser.html'), 200, headers)
+            query = "select username from `databasegroupproject`.`user` where username=%s"
+            cursor = conn.cursor()
+            cursor.execute(query, username)
+            result = cursor.fetchall()
+            for row in result:
+                for column in row:
+                    if column == username:
+                        return make_response(render_template('staffCreateUser.html'), 200, headers)
             query = "Insert into `databasegroupproject`.`admin` Values (%s,%s)"
             values = (username, password)
             cursor = conn.cursor()
             cursor.execute(query, values)
             conn.commit()
         else:
+            query = "select username from `databasegroupproject`.`admin` where username=%s"
+            cursor = conn.cursor()
+            cursor.execute(query, username)
+            result = cursor.fetchall()
+            for row in result:
+                for column in row:
+                    if column == username:
+                        return make_response(render_template('staffCreateUser.html'), 200, headers)
             query = "select username from `databasegroupproject`.`user` where username=%s"
             cursor = conn.cursor()
             cursor.execute(query, username)
@@ -697,15 +712,14 @@ class handleClassSession(Resource):
 class studentClassRegister(Resource):
     def get(self):
         try:
-            query = "SELECT * from `databasegroupproject`.`session`"
+            query = "select s.idSession, c.idClass, c.level, c.name, c.capacity, c.enrolled, c.room, c.instructor, c.cost, s.startdate, " \
+                    "s.starttime" \
+                    " from `databasegroupproject`.`classsession` cs, `databasegroupproject`.`session` s,"\
+                    " `databasegroupproject`.`classes` c WHERE cs.idClasses = c.idClass AND cs.idSession = s.idSession"
             cursor = conn.cursor()
             cursor.execute(query)
             data = cursor.fetchall()
-
-            query2 = "SELECT * from `databasegroupproject`.`classes`"
-            cursor.execute(query2)
-            sdata = cursor.fetchall()
-            return make_response(render_template("studentRegister.html", data=data, sdata=sdata))
+            return make_response(render_template("studentRegister.html", data=data))
         except Exception as e:
             return str(e)
         headers = {'Content-Type': 'text/html'}
@@ -714,6 +728,22 @@ class studentClassRegister(Resource):
 class handleStudentClassRegister(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
+        classid = request.form["classID"]
+        sessionid = request.form["sessionID"]
+        username = request.form["username"]
+        query = "select idStudent from `databasegroupproject`.`user` where username=\'%s\'"
+        query = query % username
+        cursor = conn.cursor()
+        cursor.execute(query)
+        result = cursor.fetchall()
+        userid = ''
+        for row in result:
+            for col in row:
+                userid = col
+        query = "insert into `databasegroupproject`.`takes` values (\'%s\',\'%s\',\'%s\')"
+        values = (userid, classid, sessionid)
+        query = query % values
+        cursor.execute(query)
         return make_response(render_template('success.html'), 200, headers)
 
 class showStudents(Resource):
@@ -764,17 +794,76 @@ class handleNewStudent(Resource):
         print(request.form)
         firstName = request.form["firstName"]
         lastName = request.form["lastName"]
+        username = request.form["username"]
+        password = request.form["password"]
         address = request.form["address"]
-        if not request.form["accept"]:
+        if request.form["accept"]:
+            print("Hey")
+            cursor = conn.cursor()
+            values = (firstName, lastName, address)
+            query = "select * from `databasegroupproject`.`applications` where first=\'%s\' and last=\'%s\' and " \
+                    "address=\'%s\'"
+            query = query % values
+            cursor.execute(query)
+            result = cursor.fetchall()
+            data = []
+            for row in result:
+                for col in row:
+                    data.append(col)
+
+            query = "select username from `databasegroupproject`.`admin` where username=%s"
+            cursor = conn.cursor()
+            cursor.execute(query, username)
+            result = cursor.fetchall()
+            for row in result:
+                for column in row:
+                    if column == username:
+                        return make_response(render_template('showApplicants.html'), 200, headers)
+            query = "select username from `databasegroupproject`.`user` where username=%s"
+            cursor = conn.cursor()
+            cursor.execute(query, username)
+            result = cursor.fetchall()
+            for row in result:
+                for column in row:
+                    if column == username:
+                        return make_response(render_template('showApplicants.html'), 200, headers)
+            query = "Insert into `databasegroupproject`.`user` (username, password) Values (%s,%s)"
+            values = (username, password)
+            cursor.execute(query, values)
+            query = "Select idStudent from `databasegroupproject`.`user` where username=\'%s\'"
+            query = query % username
+            cursor.execute(query)
+            result = cursor.fetchall()
+            id = 0
+            for row in result:
+                for col in row:
+                    id = col
+            query = "INSERT INTO `databasegroupproject`.`student` values (\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\'," \
+                    "\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\'," \
+                    "\'%s\', \'%s\')"
+            data.insert(0, id)
+            data.insert(15, '')
+            data.insert(19, '1')
+            info = tuple(data)
+            print(query)
+            print(info)
+            query = query % info
+            cursor.execute(query)
+            query = "delete from `databasegroupproject`.`applications` where first=\'%s\' and last=\'%s\' and " \
+                    "address=\'%s\'"
+            values = (firstName, lastName, address)
+            query = query % values
+            cursor.execute(query)
+            conn.commit()
+        else:
             query = "delete from `databasegroupproject`.`applications` where first=\'%s\' and last=\'%s\' and " \
                     "address=\'%s\'"
             cursor = conn.cursor()
             values = (firstName, lastName, address)
             query = query % values
             cursor.execute(query)
-        else:
-            query = "delete from `databasegroupproject`.`applications` where first=\'%s\' and last=\'%s\' and " \
-                    "address=\'%s\'"
+            conn.commit()
+
         return make_response(render_template('success.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
