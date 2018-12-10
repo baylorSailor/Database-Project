@@ -546,17 +546,15 @@ class showClasses(Resource):
     def get(self):
         try:
 
-            c = conn
-            query = "SELECT * from submissions"
-            c.execute(query)
+            query = "SELECT * from `databasegroupproject`.`sessions`"
+            cursor = conn.cursor()
+            cursor.execute(query)
 
-            data = c.fetchall()
+            data = cursor.fetchall()
 
             conn.close()
 
-            return data
-
-            return render_template("classes.html", data=data)
+            return make_response(render_template("classes.html", data=data))
 
         except Exception as e:
             return (str(e))
