@@ -549,17 +549,7 @@ class showClasses(Resource):
             query = "SELECT * from `databasegroupproject`.`classes`"
             cursor = conn.cursor()
             cursor.execute(query)
-
-            classId = 'Class id'
-            level = 'Level'
-            title = 'Title'
-            capacity = 'Capacity'
-            room = 'Room'
-            teacher = 'Teacher'
-            cost = 'Cost'
-            data = {classId, level, title, capacity, room, teacher, cost}
-            print(data)
-            data.add(cursor.fetchall())
+            data = cursor.fetchall()
             print(data)
 
             conn.close()
@@ -646,8 +636,21 @@ class handleCreateSession(Resource):
 
 class showSessions(Resource):
     def get(self):
+        try:
+
+            query = "SELECT * from `databasegroupproject`.`session`"
+            cursor = conn.cursor()
+            cursor.execute(query)
+            data = cursor.fetchall()
+
+            conn.close()
+
+            return make_response(render_template("classes.html", data=data))
+
+        except Exception as e:
+            return (str(e))
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('sessions.html'), 200, headers)
+        return make_response(render_template('classes.html'), 200, headers)
 
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
