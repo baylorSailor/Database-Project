@@ -784,11 +784,11 @@ class displayInfo(Resource):
             query3 = "SELECT * from `databasegroupproject`.`classes`"
             cursor.execute(query3)
             stdata = cursor.fetchall()
-            return make_response(render_template("studentRegister.html", data=data, sdata=sdata, stdata=stdata))
+            return make_response(render_template("info.html", data=data, sdata=sdata, stdata=stdata))
         except Exception as e:
             return str(e)
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('info.html'), 200, headers)
+        return make_response(render_template('index.html'), 200, headers)
 
 class handleNewStudent(Resource):
     def post(self):
