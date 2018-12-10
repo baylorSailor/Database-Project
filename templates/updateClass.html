@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>UYP Home</title>
+    <link href="../static/styles.css" type="text/css" rel="stylesheet"/>
+    <style>
+        .queryTable {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .queryTable td, .queryTable th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .queryTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .queryTable tr:hover {
+            background-color: #ddd;
+        }
+
+        .queryTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+
+<header class="UYPHeader">
+    <h1>
+        University for Young People
+    </h1>
+</header>
+<nav class="topnav">
+    <a class="active" href="\">Home</a>
+    <a href="\login">login</a>
+    <a href="\logout">logout</a>
+    <a href="\apply">apply</a>
+    <a href="\studentRegister">register for classes</a>
+    <a href="\Info">my info</a>
+</nav>
+<body>
+<div class="infoSheet" id="classSheet">
+    <h1>Available classes</h1>
+        <ul>
+            <table class="queryTable">
+                <th scope="col">Class ID</th>
+                <th scope="col">Level</th>
+                <th scope="col">Title</th>
+                <th scope="col">Capacity</th>
+                <th scope="col">Enrolled</th>
+                <th scope="col">Room</th>
+                <th scope="col">Teacher</th>
+                <th scope="col">Cost</th>
+                {% for row in data %}
+                <tr>
+                    {% for d in row %}
+                    <td>{{ d }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </ul>
+</div>
+<hr>
+
+<div class="infoSheet">
+    <h1>
+        Create New Class
+    </h1>
+    <form action="http://127.0.0.1:5000/handleUpdateClass" method="post" id="applicationForm" name="studentApp">
+
+        <p>Class level:
+            <select name="level">
+                <option value="elementary">4th-5th grade</option>
+                <option value="middle">6th-8th grade</option>
+                <option value="high">9th-12th</option>
+            </select>
+        </p>
+        <p>class name:
+            <input type="text" name="className" size="20" maxlength="20" required/>
+        </p>
+
+        <p>capacity:
+            <input type="text" name="capacity" size="4" maxlength="4" required/>
+        </p>
+
+        <p>room:
+            <input type="text" name = "room" required/>
+        </p>
+
+         <p>instructor:
+            <input type="text" name = "instructor" required/>
+        </p>
+        <p> cost:
+            <input type="number" min="1" step="any" name="cost" required/>
+        </p>
+
+        <input type="submit" name="submit" value="submit"/>
+    </form>
+</div>
+</body>
+
+</html>
