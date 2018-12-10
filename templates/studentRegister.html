@@ -65,26 +65,7 @@
                     <td>{{ d }}</td>
                     {% endfor %}
                 </tr>
-                {% endfor %}
-            </table>
-        </ul>
-</div>
-<hr>
-<div class="infoSheet" id="sessionSheet" style="right:100px">
-    <h1>Available Sessions</h1>
-        <ul>
-            <table class="queryTable">
-                <th scope="col">Session ID</th>
-                <th scope="col">Start Date</th>
-                <th scope="col">End Date</th>
-                <th scope="col">Start Time</th>
-                <th scope="col">End Time</th>
-                {% for row in sdata %}
-                <tr>
-                    {% for d in row %}
-                    <td>{{ d }}</td>
-                    {% endfor %}
-                </tr>
+                <hr>
                 {% endfor %}
             </table>
         </ul>
