@@ -637,12 +637,28 @@ class showSessions(Resource):
             cursor = conn.cursor()
             cursor.execute(query)
             data = cursor.fetchall()
-            return make_response(render_template("classes.html", data=data))
+            return make_response(render_template("sessions.html", data=data))
         except Exception as e:
             return (str(e))
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('sessions.html'), 200, headers)
 
+class showClassSessions(Resource):
+    def get(self):
+        try:
+            query = "SELECT * from `databasegroupproject`.`session`"
+            cursor = conn.cursor()
+            cursor.execute(query)
+            data = cursor.fetchall()
+
+            query2 = "SELECT * from `databasegroupproject`.`session`"
+            cursor.execute(query2)
+            sdata = cursor.fetchall()
+            return make_response(render_template("sessions.html", data=data,sdata=sdata))
+        except Exception as e:
+            return (str(e))
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('addClassToSession.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
@@ -675,6 +691,7 @@ api.add_resource(staffIndex, '/staffIndex')
 api.add_resource(createSession, '/createSession')
 api.add_resource(handleCreateSession, '/handleCreateSession')
 api.add_resource(showSessions, '/showSessions')
+api.add_resource(showClassSessions, '/showClassSessions')
 #this will finally run our server once all other aspects of it hav ebeen created.
 
 
