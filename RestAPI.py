@@ -648,12 +648,12 @@ class showClassSessions(Resource):
     @requires_roles('admin')
     def get(self):
         try:
-            query = "SELECT * from `databasegroupproject`.`session`"
+            query = "SELECT * from `databasegroupproject`.`classes`"
             cursor = conn.cursor()
             cursor.execute(query)
             data = cursor.fetchall()
 
-            query2 = "SELECT * from `databasegroupproject`.`classes`"
+            query2 = "SELECT * from `databasegroupproject`.`session`"
             cursor.execute(query2)
             sdata = cursor.fetchall()
             return make_response(render_template("addClassToSession.html", data=data, sdata=sdata))
