@@ -15,7 +15,7 @@
 # The flask_restful imports help with streamlining the api creation process so it is much more managable
 #   trying to code this without using the Flask_restful tools could be a problem with medium/large programs
 # The JSON import is what will handle converting the mysql tuple data into an easier to handle JSON format.
-from flask import Flask, flash,redirect,session,abort, request, render_template, make_response, url_for
+from flask import Flask, flash,redirect,session, abort, request, render_template, make_response, url_for
 from flask_restful import Resource, Api, reqparse
 from flaskext.mysql import MySQL
 from flask_user import login_required, user_manager, user_mixin, SQLAlchemyAdapter
