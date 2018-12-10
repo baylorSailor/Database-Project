@@ -659,6 +659,11 @@ class showClassSessions(Resource):
             return (str(e))
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('addClassToSession.html'), 200, headers)
+
+class handleClassSession(Resource):
+    def post(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('success.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
@@ -692,6 +697,7 @@ api.add_resource(createSession, '/createSession')
 api.add_resource(handleCreateSession, '/handleCreateSession')
 api.add_resource(showSessions, '/showSessions')
 api.add_resource(showClassSessions, '/showClassSessions')
+api.add_resource(handleClassSession, '/handleClassSession')
 #this will finally run our server once all other aspects of it hav ebeen created.
 
 
