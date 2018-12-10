@@ -1,4 +1,85 @@
 <!DOCTYPE html>
+<script type="text/javascript">
+    function masterCheck(form){
+        var gr = document.getElementById("grant").value;
+        var mF = document.getElementById("mFName").value;
+        var mL = document.getElementById("mLName").value;
+        var sF = document.getElementById("sFName").value;
+        var sL = document.getElementById("sLName").value;
+        var dN = document.getElementById("dName").value;
+        var hC = document.getElementById("hCnd").value;
+        if(!checkFormString(gr)){
+            return false;
+        } if(!checkFormString(mF)){
+            return false;
+        } if(!checkFormString(mL)){
+            return false;
+        } if(!checkFormString(sF)){
+            return false;
+        } if(!checkFormString(sL)){
+            return false;
+        } if(!checkFormString(dN)){
+            return false;
+        } if(!checkFormString(hC)){
+            return false;
+        }
+        return true;
+    }
+    
+    function checkFormString(vr){
+          if(vr == "") {
+             alert("Error: field is empty");
+             form.fieldname.focus();
+             return false;
+          }
+          
+          var re = /^[a-zA-Z]+$/;
+    
+          if(!re.test(form.inputfield.value)) {
+             alert("Error: Input contains invalid characters!");
+             form.inputfield.focus();
+             return false;
+          }
+    
+          if(form.length > sz){
+              alert("Error: Input is too long!")
+              form.inputfield.focus();
+              return false;
+          }
+        // var letterNumber = /^[a-zA-Z]+$/;
+        // if((inputtxt.value.match(letterNumber))) {
+        //     return true;
+        // }
+        // else{ 
+        //     alert("message"); 
+        //     return false; 
+        // }
+    }
+    
+    function isValidDate() {
+        var day = Number(document.getElementById("day").value),
+        month = Number(document.getElementById("month").value),
+        year = Number(document.getElementById("year").value);
+    
+        var date = new Date();
+        date.setFullYear(year, month - 1, day);
+        // month - 1 since the month index is 0-based (0 = January)
+    
+        if ( (date.getFullYear() == year) && (date.getMonth() == month + 1) && (date.getDate() == day) )
+          return true;
+    
+        return false;
+    }
+    
+    function checkFormNum(form){
+      var yR = document.getElementById("hCnd").value;
+      if (isNaN(yR)) 
+      {
+        alert("Must input numbers");
+        return false;
+      }
+    }
+    </script>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,12 +102,12 @@
     <h1>
         Staff Entry Form
     </h1>
-    <form action="http://127.0.0.1:5000/handleStaff" id="staffForm" method="post">
+    <form action="http://127.0.0.1:5000/handleStaff" id="staffForm" method="post" onsubmit="return masterCheck(this);">
         <p>Student Username:
-            <input type="text" name="studentUsername" size="11" maxlength="11"/>
+            <input type="text" name="studentUsername" size="11" maxlength="11" required onchange="return checkFormString(this);"/>
         </p>
         <p>Year accepted:
-            <input type="text" name="Year" size="4" maxlength="4"/>
+            <input type="text" name="Year" size="4" maxlength="4" required/>
         </p>
 
         <p>Grade when accepted:
