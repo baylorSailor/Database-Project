@@ -772,7 +772,7 @@ api.add_resource(showClassSessions, '/showClassSessions')
 api.add_resource(handleClassSession, '/handleClassSession')
 api.add_resource(studentClassRegister, '/studentRegister')
 api.add_resource(handleStudentClassRegister, '/handleStudentRegister')
-
+api.add_resource(showStudents, '/showApplicants')
 #this will finally run our server once all other aspects of it hav ebeen created.
 
 
