@@ -3,11 +3,39 @@
 
 <head>
     <title>UYP Home</title>
-    <link href="../static/styles.css" type="text/css" rel="stylesheet" />
+    <link href="../static/styles.css" type="text/css" rel="stylesheet"/>
+    <style>
+        .queryTable {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .queryTable td, .queryTable th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .queryTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .queryTable tr:hover {
+            background-color: #ddd;
+        }
+
+        .queryTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
 </head>
 
 <header class="UYPHeader">
-    <h1 >
+    <h1>
         University for Young People
     </h1>
 </header>
@@ -15,18 +43,26 @@
     <a class="active" href="\">Home</a>
     <a href="\login">login</a>
     <a href="\logout">logout</a>
-     <a  href="\apply">apply</a>
+    <a href="\apply">apply</a>
 
 </nav>
 <body>
-    <div class="infoSheet" id = "welcomeSheet">
+<div class="infoSheet" id="welcomeSheet">
     <h1>Available classes</h1>
     <div id="nav">
         <ul>
-            <p>classes will go here</p>
+            <table class="queryTable">
+                {% for row in data %}
+                <tr>
+                    {% for d in row %}
+                    <td>{{ d }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
         </ul>
     </div>
-    </div>
+</div>
 
 </body>
 

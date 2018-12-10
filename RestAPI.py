@@ -15,14 +15,73 @@
 # The flask_restful imports help with streamlining the api creation process so it is much more managable
 #   trying to code this without using the Flask_restful tools could be a problem with medium/large programs
 # The JSON import is what will handle converting the mysql tuple data into an easier to handle JSON format.
-from flask import Flask, flash,redirect,session,abort, request, render_template, make_response, url_for
+from flask import Flask, flash, redirect, session, abort, request, render_template, make_response, url_for
 from flask_restful import Resource, Api, reqparse
 from flaskext.mysql import MySQL
-from flask_user import login_required, user_manager, user_mixin, SQLAlchemyAdapter
 from functools import wraps
 
 import json
 import os
+
+def query_mysql(query,user,password,host,port,database):
+    cnx = mysql.connector.connect(user=user, password=password,
+                                  host=host, port=port,
+                                  database=database, charset="utf8", use_unicode=True)
+    cursor = cnx.cursor()
+    cursor.execute(query)
+    # get header and rows
+    header = [i[0] for i in cursor.description]
+    rows = [list(i) for i in cursor.fetchall()]
+    # append header to rows
+    rows.insert(0, header)
+    cursor.close()
+    cnx.close()
+    return rows
+
+
+# this is the second of the three functions
+def nlist_to_html(list2d):
+    # bold header
+    header = """<!DOCTYPE html>
+<html>
+
+<head>
+    <title>UYP Home</title>
+    <link href="../static/styles.css" type="text/css" rel="stylesheet" />
+</head>
+
+<header class="UYPHeader">
+    <h1 >
+        University for Young People
+    </h1>
+</header>
+<nav class="topnav">
+    <a class="active" href="\">Home</a>
+    <a href="\login">login</a>
+    <a href="\logout">logout</a>
+     <a  href="\apply">apply</a>
+
+</nav>
+<body>
+    <div class="infoSheet" id = "welcomeSheet">
+    <h1>Welcome to the University for Young People</h1>"""
+    htable = u'<table border="1" bordercolor=008000 cellspacing="0" cellpadding="1" style="table-layout:fixed;vertical-align:bottom;font-size:13px;font-family:verdana,sans,sans-serif;border-collapse:collapse;border:1px solid rgb(0,128,0)" >'
+    list2d[0] = [u'<b>' + i + u'</b>' for i in list2d[0]]
+    for row in list2d:
+        newrow = u'<tr>'
+        newrow += u'<td align="left" style="padding:1px 4px">' + str(row[0]) + u'</td>'
+        row.remove(row[0])
+        newrow = newrow + ''.join([u'<td align="right" style="padding:1px 4px">' + str(x) + u'</td>' for x in row])
+        newrow += '</tr>'
+        htable += newrow
+    htable += '</table></body></html>'
+    htable = header + htable
+    return htable
+
+
+# this is the third of the three functions
+def sql_html(query,user,password,host,port,database):
+    return nlist_to_html(query_mysql(query,user,password,host,port,database))
 
 # these lines are establish the setup for the API.
 # The Flask() function call assigns the name "main" to this instance
@@ -89,7 +148,6 @@ def do_login():
         for col in row:
             if col == username:
                 validUser = True
-    print(validUser)
     query = "select username from `databasegroupproject`.`admin`"
     cursor.execute(query)
     result = cursor.fetchall()
@@ -98,7 +156,6 @@ def do_login():
             if col == username:
                 validUser = True
 
-    print(validUser)
     if validUser:
         query = "select password from `databasegroupproject`.`user` where username=%s"
         cursor.execute(query, username)
@@ -157,7 +214,6 @@ def requires_roles(*roles):
     def wrapper(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
-            print(session)
             if not session.get('logged_in'):
                 return redirect(url_for('home'))
             elif session['role'] in roles:
@@ -488,6 +544,20 @@ class handleStaffNewUser(Resource):
 
 class showClasses(Resource):
     def get(self):
+        try:
+
+            query = "SELECT * from `databasegroupproject`.`sessions`"
+            cursor = conn.cursor()
+            cursor.execute(query)
+
+            data = cursor.fetchall()
+
+            conn.close()
+
+            return make_response(render_template("classes.html", data=data))
+
+        except Exception as e:
+            return (str(e))
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('classes.html'), 200, headers)
 
@@ -563,6 +633,12 @@ class handleCreateSession(Resource):
             conn.commit()
             return make_response(render_template('success.html'), 200, headers)
         return make_response(render_template('createSession.html'), 200, headers)
+
+class showSessions(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('sessions.html'), 200, headers)
+
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
 # I'd recommend using Postman to test these functions. Good Luck!
@@ -594,6 +670,7 @@ api.add_resource(handleCreateClass, '/handleCreateClass')
 api.add_resource(staffIndex, '/staffIndex')
 api.add_resource(createSession, '/createSession')
 api.add_resource(handleCreateSession, '/handleCreateSession')
+api.add_resource(showSessions, '/showSessions')
 #this will finally run our server once all other aspects of it hav ebeen created.
 
 
