@@ -594,6 +594,7 @@ class staffIndex(Resource):
         return make_response(render_template('staffIndex.html'), 200, headers)
 
 class createSession(Resource):
+    @requires_roles('admin')
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('createSession.html'), 200, headers)
@@ -644,6 +645,7 @@ class showSessions(Resource):
         return make_response(render_template('sessions.html'), 200, headers)
 
 class showClassSessions(Resource):
+    @requires_roles('admin')
     def get(self):
         try:
             query = "SELECT * from `databasegroupproject`.`session`"
@@ -661,6 +663,28 @@ class showClassSessions(Resource):
         return make_response(render_template('addClassToSession.html'), 200, headers)
 
 class handleClassSession(Resource):
+    def post(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('success.html'), 200, headers)
+
+class studentRegister(Resource):
+    def get(self):
+        try:
+            query = "SELECT * from `databasegroupproject`.`session`"
+            cursor = conn.cursor()
+            cursor.execute(query)
+            data = cursor.fetchall()
+
+            query2 = "SELECT * from `databasegroupproject`.`classes`"
+            cursor.execute(query2)
+            sdata = cursor.fetchall()
+            return make_response(render_template("studentRegister.html", data=data, sdata=sdata))
+        except Exception as e:
+            return str(e)
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('studentRegister.html'), 200, headers)
+
+class handleStudentRegister(Resource):
     def post(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('success.html'), 200, headers)
@@ -698,6 +722,9 @@ api.add_resource(handleCreateSession, '/handleCreateSession')
 api.add_resource(showSessions, '/showSessions')
 api.add_resource(showClassSessions, '/showClassSessions')
 api.add_resource(handleClassSession, '/handleClassSession')
+api.add_resource(studentRegister, '/studentRegister')
+api.add_resource(handleStudentRegister, '/handleStudentRegister')
+
 #this will finally run our server once all other aspects of it hav ebeen created.
 
 
