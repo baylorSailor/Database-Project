@@ -637,7 +637,7 @@ class showSessions(Resource):
             cursor = conn.cursor()
             cursor.execute(query)
             data = cursor.fetchall()
-            return make_response(render_template("classes.html", data=data))
+            return make_response(render_template("sessions.html", data=data))
         except Exception as e:
             return (str(e))
         headers = {'Content-Type': 'text/html'}
