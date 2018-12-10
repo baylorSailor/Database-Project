@@ -33,13 +33,12 @@
              return false;
           }
           
-    
-          var re = /^[\w ]+$/;
+          var re = /^[a-zA-Z]+$/;
     
           if(!re.test(form.inputfield.value)) {
-          alert("Error: Input contains invalid characters!");
-          form.inputfield.focus();
-          return false;
+             alert("Error: Input contains invalid characters!");
+             form.inputfield.focus();
+             return false;
           }
     
           if(form.length > sz){
@@ -47,9 +46,15 @@
               form.inputfield.focus();
               return false;
           }
-    
-          return true;
-        }
+        // var letterNumber = /^[a-zA-Z]+$/;
+        // if((inputtxt.value.match(letterNumber))) {
+        //     return true;
+        // }
+        // else{ 
+        //     alert("message"); 
+        //     return false; 
+        // }
+    }
     
     function isValidDate() {
         var day = Number(document.getElementById("day").value),
@@ -99,10 +104,10 @@
     </h1>
     <form action="http://127.0.0.1:5000/handleStaff" id="staffForm" method="post" onsubmit="return masterCheck(this);">
         <p>Student Username:
-            <input type="text" name="studentUsername" size="11" maxlength="11" required/>
+            <input type="text" name="studentUsername" size="11" maxlength="11" required onchange="return checkFormString(this);"/>
         </p>
         <p>Year accepted:
-            <input type="text" name="Year" size="4" maxlength="4" required onchange="checkFormNum(this)"/>
+            <input type="text" name="Year" size="4" maxlength="4" required/>
         </p>
 
         <p>Grade when accepted:
