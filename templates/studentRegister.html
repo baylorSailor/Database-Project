@@ -40,23 +40,25 @@
     </h1>
 </header>
 <nav class="topnav">
-    <a class="active" href="\">Home</a>
     <a href="\login">login</a>
     <a href="\logout">logout</a>
     <a href="\apply">apply</a>
-    <a href="\studentRegister">register for classes</a>
+    <a class = "active" href="\studentRegister">register for classes</a>
+
 </nav>
 <body>
-<div class="infoSheet" id="sessionSheet">
-    <h1>Available sessions</h1>
-    <div id="nav">
+<div class="infoSheet" id="classSheet" style = "left: 100px">
+    <h1>Available classes</h1>
         <ul>
             <table class="queryTable">
-                <th scope="col">Session ID</th>
-                <th scope="col">Start Date</th>
-                <th scope="col">End Date</th>
-                <th scope="col">Start Time</th>
-                <th scope="col">End Time</th>
+                <th scope="col">Class ID</th>
+                <th scope="col">Level</th>
+                <th scope="col">Title</th>
+                <th scope="col">Capacity</th>
+                <th scope="col">Enrolled</th>
+                <th scope="col">Room</th>
+                <th scope="col">Teacher</th>
+                <th scope="col">Cost</th>
                 {% for row in data %}
                 <tr>
                     {% for d in row %}
@@ -66,9 +68,40 @@
                 {% endfor %}
             </table>
         </ul>
-    </div>
+</div>
+<hr>
+<div class="infoSheet" id="sessionSheet" style="right:100px">
+    <h1>Available Sessions</h1>
+        <ul>
+            <table class="queryTable">
+                <th scope="col">Session ID</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                {% for row in sdata %}
+                <tr>
+                    {% for d in row %}
+                    <td>{{ d }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </ul>
 </div>
 
+<div class="infoSheet" id="submissionSheet">
+<form action="http://127.0.0.1:5000/handleStudentRegister" method="post" name="studentForm">
+        <p>Class ID:
+            <input type="class" name="classID"/>
+        </p>
+
+        <p>Session ID:
+            <input type="number" name="sessionID"/>
+        </p>
+        <input type="submit" name="submit" value="submit"/>
+    </form>
+</div>
 </body>
 
 </html>
