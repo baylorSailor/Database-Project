@@ -26,7 +26,11 @@
     </h1>
     <form action="http://127.0.0.1:5000/register/student" method="post" id="applicationForm" name="studentApp">
         <p>First name:
+<<<<<<< HEAD
+            <input type="text" id="fName" name="First" size="15" maxlength="25" onchange="nameCheck(this);"/>
+=======
             <input type="text" name="First" size="15" maxlength="25" required/>
+>>>>>>> ab97c3407528872f6c71a594175354ebce81130f
         </p>
 
         <p>Last name:
@@ -169,7 +173,7 @@
         <hr/>
 
         <p>Do you have a sibling currently enrolled in UYP?
-            <select name="isSibling" onchange=siblingCheck(this)>
+            <select name="isSibling" onchange=siblingCheck(this);>
                 <option value="yes">yes</option>
                  <option value="no">no</option>
             </select>
@@ -186,11 +190,29 @@
 </div>
 </body>
 <script>
+    function nameCheck(that) {
+        var patt = new RegExp("^[a-zA-Z]*$");
+        var elMsg = document.getElementById('fName');
+        if(!patt.test(that.value)) {
+            alert("Name must only contain alphabetical values");
+            document.getElementById('fName').style.background = '#e35152';
+            return true;
+            // elMsg.innerHTML = "Name must only contain alphabetical values";
+        }else{
+            document.getElementById('fName').style.background = '#ccffcc';
+        }
+
+        if((document.studentApp.First.value == "") && (document.studentApp.Last.value == "")){
+            document.getElementById("First").innerHTML = "First name or Second name should not be empty";
+            registerationform.fnametxt.focus();
+            return(false);
+        }
+    }
+
     function schoolCheck(that) {
         if (that.value =="private") {
             document.getElementById("schoolName").style.display = "block";
             document.getElementById("district").value='';
-
         }
         if(that.value =="home"){
             document.getElementById("district").style.display = "none";
