@@ -662,7 +662,34 @@ class showClassSessions(Resource):
 
 class handleClassSession(Resource):
     def post(self):
+        cursor = conn.cursor()
         headers = {'Content-Type': 'text/html'}
+        idClass = request.form["classID"]
+        idSession = request.form["sessionID"]
+        validClass = False
+        validSession = False
+        query = "select idClass from `databasegroupproject`.`classes`"
+        cursor.execute(query)
+        result = cursor.fetchall()
+        for row in result:
+            for col in row:
+                if str(col) == idClass:
+                    validClass = True
+        query = "select idSession from `databasegroupproject`.`session`"
+        cursor.execute(query)
+        result = cursor.fetchall()
+        for row in result:
+            for col in row:
+                if str(col) == idSession:
+                    validSession = True
+        if validSession and validClass:
+            query = "insert into `databasegroupproject`.`classsession` values (\'%s\', \'%s\')" \
+                    " on duplicate key update idClasses=\'%s\'"
+            values = (idClass, idSession, idClass)
+            query = query % values
+
+            cursor.execute(query)
+        conn.commit()
         return make_response(render_template('success.html'), 200, headers)
 # These function calls simply establish endpoints that will be associated with the functions defined above
 # an endpoint is simply an url where a client can reach an API to make requests.
